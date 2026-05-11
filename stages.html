@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escenarios - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,700;1,700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: #000;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-link {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .nintendo-logo {
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+
+    .stages-hero {
+      background: #000 url('https://www.smashbros.com/assets_v2/img/stage/main_bg.jpg') no-repeat center;
+      background-size: cover;
+      padding: 80px 20px 40px;
+      text-align: center;
+      border-bottom: 4px solid #ffaa00;
+    }
+
+    .stages-tools {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 28px 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stages-search {
+      flex: 1;
+      min-width: 260px;
+      background: #141414;
+      border: 1px solid #333;
+      border-radius: 999px;
+      padding: 14px 18px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .stages-count {
+      color: #ddd;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 15px;
+      padding: 30px 20px 40px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .stage-card {
+      position: relative;
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      cursor: pointer;
+    }
+
+    .stage-card:hover {
+      transform: scale(1.05);
+      border-color: #ffaa00;
+      z-index: 10;
+      box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+    }
+
+    .stage-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: filter 0.3s;
+    }
+
+    .stage-card:hover img {
+      filter: brightness(1.1);
+    }
+
+    .stage-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+      padding: 15px 0 8px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: italic;
+      text-align: center;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .stage-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #ffaa00;
+      color: #000;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      font-family: 'Roboto Condensed', sans-serif;
+      z-index: 2;
+    }
+
+    .stages-note {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 20px 50px;
+      color: #bfbfbf;
+      font-size: 15px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      max-width: 85%;
+      max-height: 75%;
+      border: 4px solid #ffaa00;
+      box-shadow: 0 0 50px rgba(255, 170, 0, 0.2);
+      transform-origin: center;
+      animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-caption {
+      margin-top: 25px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 40px;
+      font-style: italic;
+      text-transform: uppercase;
+      color: #ffaa00;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+      letter-spacing: 2px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 60px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #ffaa00;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .footer {
+      padding: 60px 20px;
+      text-align: center;
+      background: #000;
+      color: #666;
+      font-size: 12px;
+      border-top: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+  <div id="stageModal" class="modal" onclick="closePreview()">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="imgFull" alt="Vista ampliada del escenario">
+    <div id="caption" class="modal-caption"></div>
+  </div>
+
+  <header class="header">
+    <div class="header-left"><a href="index.html" class="nintendo-logo">Nintendo</a></div>
+    <div class="header-right">
+      <a href="index.html" class="header-link">Inicio</a>
+      <a href="fighters.html" class="header-link">Luchadores</a>
+      <a href="videos.html" class="header-link">Videos</a>
+    </div>
+  </header>
+
+  <section class="stages-hero">
+    <h1 style="font-size: 60px; font-style: italic; font-family: 'Roboto Condensed', sans-serif; margin: 0; letter-spacing: 4px;">ESCENARIOS</h1>
+    <p style="margin-top: 14px;">Explora el enorme catalogo de arenas clasicas, modernas y descargables.</p>
+  </section>
+
+  <section class="stages-tools">
+    <input class="stages-search" type="search" placeholder="Busca por nombre o numero de escenario..." data-stage-search>
+    <div class="stages-count" data-stage-count>0 escenarios visibles</div>
+  </section>
+
+  <main class="stages-grid" id="mainGrid"></main>
+
+  <p class="stages-note">Cada tarjeta se puede abrir en grande. Esta galeria ya incluye los 115 escenarios con sus imagenes, incluidos los descargables del final.</p>
+
+  <footer class="footer">
+    <p>© 2018 Nintendo. Original Game: © Nintendo / HAL Laboratory, Inc.</p>
+  </footer>
+
+  <script>
+    const dlcStageImages = [
+      '/assets_v2/img/stage/stage_addition_img1.jpg',
+      '/assets_v2/img/stage/stage_addition_img2.jpg',
+      '/assets_v2/img/stage/stage_addition_img3.jpg',
+      '/assets_v2/img/stage/stage_addition_img4.jpg',
+      '/assets_v2/img/stage/stage_addition_img5.jpg',
+      '/assets_v2/img/stage/stage_addition_img6.jpg',
+      '/assets_v2/img/stage/stage_addition_img7.jpg',
+      '/assets_v2/img/stage/stage_addition_img8.jpg',
+      '/assets_v2/img/stage/stage_addition_img9.jpg',
+      '/assets_v2/img/stage/stage_addition_img10.jpg',
+      '/assets_v2/img/stage/stage_addition_img11.jpg'
+    ];
+
+    const stageData = [
+      { number: '001', name: 'Battlefield' },
+      { number: '002', name: 'Small Battlefield' },
+      { number: '003', name: 'Big Battlefield' },
+      { number: '004', name: 'Final Destination' },
+      { number: '005', name: "Peach's Castle" },
+      { number: '006', name: 'Kongo Jungle' },
+      { number: '007', name: 'Hyrule Castle' },
+      { number: '008', name: 'Super Happy Tree' },
+      { number: '009', name: 'Dream Land' },
+      { number: '010', name: 'Saffron City' },
+      { number: '011', name: 'Mushroom Kingdom' },
+      { number: '012', name: "Princess Peach's Castle" },
+      { number: '013', name: 'Rainbow Cruise' },
+      { number: '014', name: 'Kongo Falls' },
+      { number: '015', name: 'Jungle Japes' },
+      { number: '016', name: 'Great Bay' },
+      { number: '017', name: 'Temple' },
+      { number: '018', name: 'Brinstar' },
+      { number: '019', name: "Yoshi's Island (Melee)" },
+      { number: '020', name: "Yoshi's Story" },
+      { number: '021', name: 'Fountain of Dreams' },
+      { number: '022', name: 'Green Greens' },
+      { number: '023', name: 'Corneria' },
+      { number: '024', name: 'Venom' },
+      { number: '025', name: 'Pokemon Stadium' },
+      { number: '026', name: 'Onett' },
+      { number: '027', name: 'Mushroom Kingdom II' },
+      { number: '028', name: 'Brinstar Depths' },
+      { number: '029', name: 'Big Blue' },
+      { number: '030', name: 'Fourside' },
+      { number: '031', name: 'Delfino Plaza' },
+      { number: '032', name: 'Mushroomy Kingdom' },
+      { number: '033', name: 'Figure-8 Circuit' },
+      { number: '034', name: 'WarioWare, Inc.' },
+      { number: '035', name: 'Bridge of Eldin' },
+      { number: '036', name: 'Norfair' },
+      { number: '037', name: 'Frigate Orpheon' },
+      { number: '038', name: "Yoshi's Island" },
+      { number: '039', name: 'Halberd' },
+      { number: '040', name: 'Lylat Cruise' },
+      { number: '041', name: 'Pokemon Stadium 2' },
+      { number: '042', name: 'Port Town Aero Dive' },
+      { number: '043', name: 'Castle Siege' },
+      { number: '044', name: 'Distant Planet' },
+      { number: '045', name: 'Smashville' },
+      { number: '046', name: 'New Pork City' },
+      { number: '047', name: 'Summit' },
+      { number: '048', name: 'Skyworld' },
+      { number: '049', name: 'Shadow Moses Island' },
+      { number: '050', name: "Luigi's Mansion" },
+      { number: '051', name: 'Pirate Ship' },
+      { number: '052', name: 'Spear Pillar' },
+      { number: '053', name: '75 m' },
+      { number: '054', name: 'Mario Bros.' },
+      { number: '055', name: 'Hanenbow' },
+      { number: '056', name: 'Green Hill Zone' },
+      { number: '057', name: '3D Land' },
+      { number: '058', name: 'Golden Plains' },
+      { number: '059', name: 'Paper Mario' },
+      { number: '060', name: 'Gerudo Valley' },
+      { number: '061', name: 'Spirit Train' },
+      { number: '062', name: 'Dream Land GB' },
+      { number: '063', name: 'Unova Pokemon League' },
+      { number: '064', name: 'Prism Tower' },
+      { number: '065', name: 'Mute City SNES' },
+      { number: '066', name: 'Magicant' },
+      { number: '067', name: 'Arena Ferox' },
+      { number: '068', name: 'Reset Bomb Forest' },
+      { number: '069', name: 'Tortimer Island' },
+      { number: '070', name: 'Balloon Fight' },
+      { number: '071', name: 'Living Room' },
+      { number: '072', name: 'Find Mii' },
+      { number: '073', name: 'Tomodachi Life' },
+      { number: '074', name: 'PictoChat 2' },
+      { number: '075', name: 'Mushroom Kingdom U' },
+      { number: '076', name: 'Mario Galaxy' },
+      { number: '077', name: 'Mario Circuit' },
+      { number: '078', name: 'Skyloft' },
+      { number: '079', name: 'The Great Cave Offensive' },
+      { number: '080', name: 'Kalos Pokemon League' },
+      { number: '081', name: 'Coliseum' },
+      { number: '082', name: 'Flat Zone X' },
+      { number: '083', name: "Palutena's Temple" },
+      { number: '084', name: 'Gamer' },
+      { number: '085', name: 'Garden of Hope' },
+      { number: '086', name: 'Town and City' },
+      { number: '087', name: 'Wii Fit Studio' },
+      { number: '088', name: 'Boxing Ring' },
+      { number: '089', name: 'Gaur Plain' },
+      { number: '090', name: 'Duck Hunt' },
+      { number: '091', name: 'Wrecking Crew' },
+      { number: '092', name: 'Pilotwings' },
+      { number: '093', name: 'Wuhu Island' },
+      { number: '094', name: 'Windy Hill Zone' },
+      { number: '095', name: 'Wily Castle' },
+      { number: '096', name: 'PAC-LAND' },
+      { number: '097', name: 'Super Mario Maker' },
+      { number: '098', name: 'Suzaku Castle' },
+      { number: '099', name: 'Midgar' },
+      { number: '100', name: 'Umbra Clock Tower' },
+      { number: '101', name: 'New Donk City Hall' },
+      { number: '102', name: 'Great Plateau Tower' },
+      { number: '103', name: 'Moray Towers' },
+      { number: '104', name: "Dracula's Castle" },
+      { number: '105', name: 'Mementos' },
+      { number: '106', name: "Yggdrasil's Altar" },
+      { number: '107', name: 'Spiral Mountain' },
+      { number: '108', name: 'King of Fighters Stadium' },
+      { number: '109', name: 'Garreg Mach Monastery' },
+      { number: '110', name: 'Spring Stadium' },
+      { number: '111', name: 'Minecraft World' },
+      { number: '112', name: 'Northern Cave' },
+      { number: '113', name: 'Cloud Sea of Alrest' },
+      { number: '114', name: 'Mishima Dojo', id: 'mishima-dojo' },
+      { number: '115', name: 'Hollow Bastion', id: 'bastion-hueco' }
+    ];
+
+    const mainGrid = document.getElementById('mainGrid');
+
+    stageData.forEach((stage) => {
+      const card = document.createElement('div');
+      card.className = 'stage-card';
+      if (stage.id) {
+        card.id = stage.id;
+      }
+
+      const order = Number(stage.number);
+      let imagePath = '';
+
+      if (order === 1) {
+        imagePath = '/assets_v2/img/stage/stage_img1.jpg';
+      } else if (order === 2) {
+        imagePath = '/assets_v2/img/stage/stage_img104.jpg';
+      } else if (order === 10) {
+        imagePath = '/assets_v2/img/stage/stage_img9_en.jpg';
+      } else if (order >= 3 && order <= 104) {
+        imagePath = `/assets_v2/img/stage/stage_img${order - 1}.jpg`;
+      } else {
+        imagePath = dlcStageImages[order - 105];
+      }
+
+      const image = `https://www.smashbros.com${imagePath}`;
+      card.innerHTML = `
+        <span class="stage-number">${stage.number}</span>
+        <img src="${image}" alt="${stage.name}">
+        <div class="stage-info">${stage.name}</div>
+      `;
+
+      mainGrid.appendChild(card);
+    });
+  </script>
+  <script src="main.js"></script>
+</body>
+</html>

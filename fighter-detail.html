@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de luchador - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --fighter-accent: #e60012; }
+    body { background-color: #000; color: #fff; margin: 0; font-family: 'Roboto', sans-serif; overflow: hidden; }
+
+    .fighter-detail-page {
+      position: relative; width: 100%; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(circle at 75%, #333 0%, #000 82%);
+    }
+
+    .bg-number {
+      position: absolute; font-size: 45vw; font-weight: 900;
+      color: rgba(255, 255, 255, 0.03); left: 5%; z-index: 1; pointer-events: none;
+    }
+
+    /* --- ANIMACIÓN UNIVERSAL PARA EL MODELO --- */
+    @keyframes fighterEntry {
+      0% {
+        opacity: 0;
+        transform: translateX(120px) scale(0.85);
+        filter: blur(15px) brightness(2);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    .fighter-img {
+      position: relative; 
+      max-height: 85vh; 
+      z-index: 3;
+      filter: drop-shadow(0 0 50px rgba(0,0,0,0.8));
+      animation: fighterEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      will-change: transform, opacity, filter;
+    }
+
+    .info-container { 
+      position: absolute; 
+      left: 8%; 
+      z-index: 4; 
+      max-width: 500px;
+      animation: fadeInText 0.6s ease-out 0.4s both;
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .number-badge {
+      display: inline-block; background: var(--fighter-accent); color: #fff;
+      padding: 5px 15px; font-weight: 900; font-style: italic; font-size: 24px;
+      margin-bottom: 10px; transform: skewX(-15deg);
+    }
+
+    .name-title {
+      font-family: 'Roboto Condensed', sans-serif; font-size: 80px;
+      font-weight: 900; font-style: italic; text-transform: uppercase;
+      margin: 0; line-height: 0.9;
+    }
+
+    .series-tag {
+      font-family: 'Roboto Condensed', sans-serif; font-size: 22px;
+      color: var(--fighter-accent); text-transform: uppercase;
+      margin-top: 10px; letter-spacing: 2px; font-weight: 700;
+    }
+
+    .tagline { font-size: 18px; margin: 20px 0; color: #ccc; line-height: 1.4; }
+
+    .debut-box { margin-top: 30px; border-left: 4px solid var(--fighter-accent); padding-left: 20px; }
+    .debut-label { display: block; font-size: 12px; text-transform: uppercase; color: #888; letter-spacing: 1px; }
+    .debut-value { font-size: 24px; font-weight: 700; font-family: 'Roboto Condensed', sans-serif; font-style: italic; }
+
+    .btn-back {
+      position: absolute; top: 40px; left: 40px; z-index: 10;
+      color: #fff; text-decoration: none; font-weight: bold;
+      text-transform: uppercase; border: 2px solid #fff; padding: 10px 20px; transition: 0.3s;
+    }
+    .btn-back:hover { background: #fff; color: #000; }
+
+    /* --- BOTONES DE NAVEGACIÓN --- */
+    .nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.1); color: white; border: none;
+      font-size: 40px; padding: 30px 15px; cursor: pointer; z-index: 10;
+      transition: 0.3s; font-family: 'Roboto Condensed', sans-serif;
+    }
+    .nav-btn:hover { background: var(--fighter-accent); color: white; }
+    .prev-btn { left: 0; clip-path: polygon(0 0, 100% 15%, 100% 85%, 0 100%); }
+    .next-btn { right: 0; clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 85%); }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .fighter-detail-page { flex-direction: column; height: auto; min-height: 100vh; padding: 100px 20px; }
+      .fighter-img { max-height: 50vh; width: 100%; object-fit: contain; }
+      .info-container { position: static; margin-top: 30px; text-align: center; }
+      .nav-btn { top: auto; bottom: 20px; transform: none; padding: 10px 30px; font-size: 24px; }
+      .prev-btn { left: 20px; }
+      .next-btn { right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="fighters.html" class="btn-back">Volver</a>
+
+  <button class="nav-btn prev-btn" id="prev-btn" onclick="changeFighter(-1)">❮</button>
+  <button class="nav-btn next-btn" id="next-btn" onclick="changeFighter(1)">❯</button>
+
+  <div class="fighter-detail-page">
+    <div class="bg-number" id="bg-number">--</div>
+    
+    <div class="info-container" id="info-container">
+      <div class="number-badge" id="fighter-number">--</div>
+      <h1 class="name-title" id="fighter-name">Cargando...</h1>
+      <div class="series-tag" id="fighter-series">---</div>
+      
+      <p class="tagline" id="fighter-tagline">...</p>
+      
+      <div class="debut-box">
+        <span class="debut-label">Debut en Smash</span>
+        <span class="debut-value" id="fighter-debut">---</span>
+      </div>
+    </div>
+
+    <img src="" alt="" class="fighter-img" id="fighter-img">
+  </div>
+
+  <script>
+    const fighters = {
+      "mario": { name: "Mario", number: "01", series: "Super Mario", debut: "Smash 64", color: "#e60012", tagline: "El icono indiscutible de los videojuegos.", image: "https://www.smashbros.com/assets_v2/img/fighter/mario/main.png" },
+      "donkey_kong": { name: "Donkey Kong", number: "02", series: "Donkey Kong", debut: "Smash 64", color: "#f9a825", tagline: "El rey de la jungla y los puñetazos cargados.", image: "https://www.smashbros.com/assets_v2/img/fighter/donkey_kong/main.png" },
+      "link": { name: "Link", number: "03", series: "The Legend of Zelda", debut: "Smash 64", color: "#00a050", tagline: "El héroe de Hyrule con su arsenal ancestral.", image: "https://www.smashbros.com/assets_v2/img/fighter/link/main.png" },
+      "samus": { name: "Samus", number: "04", series: "Metroid", debut: "Smash 64", color: "#ff9100", tagline: "La cazarrecompensas galáctica más letal.", image: "https://www.smashbros.com/assets_v2/img/fighter/samus/main.png" },
+      "dark_samus": { name: "Samus Oscura", number: "04ε", series: "Metroid", debut: "Ultimate", color: "#4527a0", tagline: "La encarnación del Phazon.", image: "https://www.smashbros.com/assets_v2/img/fighter/dark_samus/main.png" },
+      "yoshi": { name: "Yoshi", number: "05", series: "Yoshi", debut: "Smash 64", color: "#8bc34a", tagline: "El dinosaurio más alegre y tragón.", image: "https://www.smashbros.com/assets_v2/img/fighter/yoshi/main.png" },
+      "kirby": { name: "Kirby", number: "06", series: "Kirby", debut: "Smash 64", color: "#f48fb1", tagline: "La bola rosa capaz de copiarlo todo.", image: "https://www.smashbros.com/assets_v2/img/fighter/kirby/main.png" },
+      "fox": { name: "Fox", number: "07", series: "Star Fox", debut: "Smash 64", color: "#2196f3", tagline: "Velocidad de crucero y reflejos de acero.", image: "https://www.smashbros.com/assets_v2/img/fighter/fox/main.png" },
+      "pikachu": { name: "Pikachu", number: "08", series: "Pokémon", debut: "Smash 64", color: "#ffeb3b", tagline: "Chispas de agilidad y poder eléctrico.", image: "https://www.smashbros.com/assets_v2/img/fighter/pikachu/main.png" },
+      "luigi": { name: "Luigi", number: "09", series: "Super Mario", debut: "Smash 64", color: "#4caf50", tagline: "El eterno segundón con trucos únicos.", image: "https://www.smashbros.com/assets_v2/img/fighter/luigi/main.png" },
+      "ness": { name: "Ness", number: "10", series: "EarthBound", debut: "Smash 64", color: "#f44336", tagline: "Poderes PSI desde Onett.", image: "https://www.smashbros.com/assets_v2/img/fighter/ness/main.png" },
+      "captain_falcon": { name: "Capt. Falcon", number: "11", series: "F-Zero", debut: "Smash 64", color: "#3f51b5", tagline: "¡Show me your moves!", image: "https://www.smashbros.com/assets_v2/img/fighter/captain_falcon/main.png" },
+      "jigglypuff": { name: "Jigglypuff", number: "12", series: "Pokémon", debut: "Smash 64", color: "#f8bbd0", tagline: "La reina de las siestas letales.", image: "https://www.smashbros.com/assets_v2/img/fighter/jigglypuff/main.png" },
+      "peach": { name: "Peach", number: "13", series: "Super Mario", debut: "Melee", color: "#f5a2c8", tagline: "Elegancia Real en el campo de batalla.", image: "https://www.smashbros.com/assets_v2/img/fighter/peach/main.png" },
+      "daisy": { name: "Daisy", number: "13ε", series: "Super Mario", debut: "Ultimate", color: "#ffa000", tagline: "¡La princesa de Sarasaland!", image: "https://www.smashbros.com/assets_v2/img/fighter/daisy/main.png" },
+      "bowser": { name: "Bowser", number: "14", series: "Super Mario", debut: "Melee", color: "#43a047", tagline: "El Rey de los Koopas.", image: "https://www.smashbros.com/assets_v2/img/fighter/bowser/main.png" },
+      "ice_climbers": { name: "Ice Climbers", number: "15", series: "Ice Climber", debut: "Melee", color: "#81d4fa", tagline: "Dos por el precio de uno.", image: "https://www.smashbros.com/assets_v2/img/fighter/ice_climbers/main.png" },
+      "sheik": { name: "Sheik", number: "16", series: "The Legend of Zelda", debut: "Melee", color: "#7986cb", tagline: "Agilidad ninja y precisión absoluta.", image: "https://www.smashbros.com/assets_v2/img/fighter/sheik/main.png" },
+      "zelda": { name: "Zelda", number: "17", series: "The Legend of Zelda", debut: "Melee", color: "#ce93d8", tagline: "Magia ancestral de la Trifuerza.", image: "https://www.smashbros.com/assets_v2/img/fighter/zelda/main.png" },
+      "dr_mario": { name: "Dr. Mario", number: "18", series: "Super Mario", debut: "Melee", color: "#eeeeee", tagline: "La receta para el K.O. directo.", image: "https://www.smashbros.com/assets_v2/img/fighter/dr_mario/main.png" },
+      "pichu": { name: "Pichu", number: "19", series: "Pokémon", debut: "Melee", color: "#fff176", tagline: "Pequeño, valiente y eléctrico.", image: "https://www.smashbros.com/assets_v2/img/fighter/pichu/main.png" },
+      "falco": { name: "Falco", number: "20", series: "Star Fox", debut: "Melee", color: "#304ffe", tagline: "Prefiero el aire al suelo.", image: "https://www.smashbros.com/assets_v2/img/fighter/falco/main.png" },
+      "marth": { name: "Marth", number: "21", series: "Fire Emblem", debut: "Melee", color: "#1e88e5", tagline: "El Rey Heroico.", image: "https://www.smashbros.com/assets_v2/img/fighter/marth/main.png" },
+      "lucina": { name: "Lucina", number: "21ε", series: "Fire Emblem", debut: "Smash 4", color: "#3949ab", tagline: "Desafiando al destino.", image: "https://www.smashbros.com/assets_v2/img/fighter/lucina/main.png" },
+      "young_link": { name: "Young Link", number: "22", series: "The Legend of Zelda", debut: "Melee", color: "#4caf50", tagline: "La rapidez del héroe del tiempo.", image: "https://www.smashbros.com/assets_v2/img/fighter/young_link/main.png" },
+      "ganondorf": { name: "Ganondorf", number: "23", series: "The Legend of Zelda", debut: "Melee", color: "#4e342e", tagline: "El Gran Rey del Mal.", image: "https://www.smashbros.com/assets_v2/img/fighter/ganondorf/main.png" },
+      "mewtwo": { name: "Mewtwo", number: "24", series: "Pokémon", debut: "Melee", color: "#b39ddb", tagline: "Poder mental inmenso.", image: "https://www.smashbros.com/assets_v2/img/fighter/mewtwo/main.png" },
+      "roy": { name: "Roy", number: "25", series: "Fire Emblem", debut: "Melee", color: "#d32f2f", tagline: "El joven león.", image: "https://www.smashbros.com/assets_v2/img/fighter/roy/main.png" },
+      "chrom": { name: "Chrom", number: "25ε", series: "Fire Emblem", debut: "Ultimate", color: "#1a237e", tagline: "El destino se puede cambiar.", image: "https://www.smashbros.com/assets_v2/img/fighter/chrom/main.png" },
+      "mr_game_and_watch": { name: "Mr. Game & Watch", number: "26", series: "Game & Watch", debut: "Melee", color: "#212121", tagline: "El origen de la diversión portátil.", image: "https://www.smashbros.com/assets_v2/img/fighter/mr_game_and_watch/main.png" },
+      "meta_knight": { name: "Meta Knight", number: "27", series: "Kirby", debut: "Brawl", color: "#303f9f", tagline: "Velocidad de corte sónica.", image: "https://www.smashbros.com/assets_v2/img/fighter/meta_knight/main.png" },
+      "pit": { name: "Pit", number: "28", series: "Kid Icarus", debut: "Brawl", color: "#90caf9", tagline: "El ángel fiel.", image: "https://www.smashbros.com/assets_v2/img/fighter/pit/main.png" },
+      "dark_pit": { name: "Pit Sombrío", number: "28ε", series: "Kid Icarus", debut: "Smash 4", color: "#212121", tagline: "El reflejo oscuro.", image: "https://www.smashbros.com/assets_v2/img/fighter/dark_pit/main.png" },
+      "zero_suit_samus": { name: "Samus Zero", number: "29", series: "Metroid", debut: "Brawl", color: "#1976d2", tagline: "Letal sin armadura.", image: "https://www.smashbros.com/assets_v2/img/fighter/zero_suit_samus/main.png" },
+      "wario": { name: "Wario", number: "30", series: "WarioWare", debut: "Brawl", color: "#fbc02d", tagline: "¡Wario Time!", image: "https://www.smashbros.com/assets_v2/img/fighter/wario/main.png" },
+      "snake": { name: "Snake", number: "31", series: "Metal Gear Solid", debut: "Brawl", color: "#455a64", tagline: "El legendario mercenario.", image: "https://www.smashbros.com/assets_v2/img/fighter/snake/main.png" },
+      "ike": { name: "Ike", number: "32", series: "Fire Emblem", debut: "Brawl", color: "#c62828", tagline: "Lucho por mis amigos.", image: "https://www.smashbros.com/assets_v2/img/fighter/ike/main.png" },
+      "pokemon_trainer": { name: "Entrenador Pokémon", number: "33-35", series: "Pokémon", debut: "Brawl", color: "#f44336", tagline: "¡Hazte con todos!", image: "https://www.smashbros.com/assets_v2/img/fighter/pokemon_trainer/main.png" },
+      "diddy_kong": { name: "Diddy Kong", number: "36", series: "Donkey Kong", debut: "Brawl", color: "#d32f2f", tagline: "Agilidad simia.", image: "https://www.smashbros.com/assets_v2/img/fighter/diddy_kong/main.png" },
+      "lucas": { name: "Lucas", number: "37", series: "Mother", debut: "Brawl", color: "#ffeb3b", tagline: "Poderes PSI desde Tazmily.", image: "https://www.smashbros.com/assets_v2/img/fighter/lucas/main.png" },
+      "sonic": { name: "Sonic", number: "38", series: "Sonic the Hedgehog", debut: "Brawl", color: "#1565c0", tagline: "El erizo más rápido.", image: "https://www.smashbros.com/assets_v2/img/fighter/sonic/main.png" },
+      "king_dedede": { name: "Rey Dedede", number: "39", series: "Kirby", debut: "Brawl", color: "#e53935", tagline: "El autoproclamado rey.", image: "https://www.smashbros.com/assets_v2/img/fighter/king_dedede/main.png" },
+      "olimar": { name: "Olimar", number: "40", series: "Pikmin", debut: "Brawl", color: "#43a047", tagline: "Líder de los Pikmin.", image: "https://www.smashbros.com/assets_v2/img/fighter/olimar/main.png" },
+      "lucario": { name: "Lucario", number: "41", series: "Pokémon", debut: "Brawl", color: "#0277bd", tagline: "El poder del Aura.", image: "https://www.smashbros.com/assets_v2/img/fighter/lucario/main.png" },
+      "rob": { name: "R.O.B.", number: "42", series: "R.O.B.", debut: "Brawl", color: "#9e9e9e", tagline: "El robot de Nintendo.", image: "https://www.smashbros.com/assets_v2/img/fighter/rob/main.png" },
+      "toon_link": { name: "Toon Link", number: "43", series: "The Legend of Zelda", debut: "Brawl", color: "#8bc34a", tagline: "El héroe de los vientos.", image: "https://www.smashbros.com/assets_v2/img/fighter/toon_link/main.png" },
+      "wolf": { name: "Wolf", number: "44", series: "Star Fox", debut: "Brawl", color: "#37474f", tagline: "El líder de Star Wolf.", image: "https://www.smashbros.com/assets_v2/img/fighter/wolf/main.png" },
+      "villager": { name: "Aldeano", number: "45", series: "Animal Crossing", debut: "Smash 4", color: "#4caf50", tagline: "¡La vida tranquila!", image: "https://www.smashbros.com/assets_v2/img/fighter/villager/main.png" },
+      "mega_man": { name: "Mega Man", number: "46", series: "Mega Man", debut: "Smash 4", color: "#1976d2", tagline: "El bombardero azul.", image: "https://www.smashbros.com/assets_v2/img/fighter/mega_man/main.png" },
+      "wii_fit_trainer": { name: "Entrenadora Wii Fit", number: "47", series: "Wii Fit", debut: "Smash 4", color: "#81c784", tagline: "¡A calentar!", image: "https://www.smashbros.com/assets_v2/img/fighter/wii_fit_trainer/main.png" },
+      "rosalina_and_luma": { name: "Estela y Destello", number: "48", series: "Super Mario", debut: "Smash 4", color: "#80deea", tagline: "Protectora del cosmos.", image: "https://www.smashbros.com/assets_v2/img/fighter/rosalina_and_luma/main.png" },
+      "little_mac": { name: "Little Mac", number: "49", series: "Punch-Out!!", debut: "Smash 4", color: "#1b5e20", tagline: "El campeón de los pesos ligeros.", image: "https://www.smashbros.com/assets_v2/img/fighter/little_mac/main.png" },
+      "greninja": { name: "Greninja", number: "50", series: "Pokémon", debut: "Smash 4", color: "#283593", tagline: "El ninja de agua.", image: "https://www.smashbros.com/assets_v2/img/fighter/greninja/main.png" },
+      "palutena": { name: "Palutena", number: "54", series: "Kid Icarus", debut: "Smash 4", color: "#00c853", tagline: "La Diosa de la Luz.", image: "https://www.smashbros.com/assets_v2/img/fighter/palutena/main.png" },
+      "pac_man": { name: "PAC-MAN", number: "55", series: "PAC-MAN", debut: "Smash 4", color: "#ffeb3b", tagline: "El icono de los recreativos.", image: "https://www.smashbros.com/assets_v2/img/fighter/pac_man/main.png" },
+      "robin": { name: "Robin", number: "56", series: "Fire Emblem", debut: "Smash 4", color: "#7e57c2", tagline: "El estratega maestro.", image: "https://www.smashbros.com/assets_v2/img/fighter/robin/main.png" },
+      "shulk": { name: "Shulk", number: "57", series: "Xenoblade", debut: "Smash 4", color: "#d32f2f", tagline: "¡Siento el poder de la Monado!", image: "https://www.smashbros.com/assets_v2/img/fighter/shulk/main.png" },
+      "bowser_jr": { name: "Bowsy", number: "58", series: "Super Mario", debut: "Smash 4", color: "#7cb342", tagline: "Heredero Koopa.", image: "https://www.smashbros.com/assets_v2/img/fighter/bowser_jr/main.png" },
+      "duck_hunt": { name: "Dúo Duck Hunt", number: "59", series: "Duck Hunt", debut: "Smash 4", color: "#795548", tagline: "Un equipo inesperado.", image: "https://www.smashbros.com/assets_v2/img/fighter/duck_hunt/main.png" },
+      "ryu": { name: "Ryu", number: "60", series: "Street Fighter", debut: "Smash 4", color: "#eeeeee", tagline: "El guerrero errante.", image: "https://www.smashbros.com/assets_v2/img/fighter/ryu/main.png" },
+      "ken": { name: "Ken", number: "60ε", series: "Street Fighter", debut: "Ultimate", color: "#d32f2f", tagline: "El rival ardiente.", image: "https://www.smashbros.com/assets_v2/img/fighter/ken/main.png" },
+      "cloud": { name: "Cloud", number: "61", series: "Final Fantasy", debut: "Smash 4", color: "#455a64", tagline: "Ex-Soldado con la Espada Mortal.", image: "https://www.smashbros.com/assets_v2/img/fighter/cloud/main.png" },
+      "corrin": { name: "Corrin", number: "62", series: "Fire Emblem", debut: "Smash 4", color: "#90caf9", tagline: "Sangre de dragón.", image: "https://www.smashbros.com/assets_v2/img/fighter/corrin/main.png" },
+      "bayonetta": { name: "Bayonetta", number: "63", series: "Bayonetta", debut: "Smash 4", color: "#311b92", tagline: "La Bruja de Umbra.", image: "https://www.smashbros.com/assets_v2/img/fighter/bayonetta/main.png" },
+      "inkling": { name: "Inkling", number: "64", series: "Splatoon", debut: "Ultimate", color: "#f57c00", tagline: "¡Píntalo todo!", image: "https://www.smashbros.com/assets_v2/img/fighter/inkling/main.png" },
+      "ridley": { name: "Ridley", number: "65", series: "Metroid", debut: "Ultimate", color: "#6a1b9a", tagline: "El terror de los piratas espaciales.", image: "https://www.smashbros.com/assets_v2/img/fighter/ridley/main.png" },
+      "simon": { name: "Simon", number: "66", series: "Castlevania", debut: "Ultimate", color: "#795548", tagline: "El cazavampiros Belmont.", image: "https://www.smashbros.com/assets_v2/img/fighter/simon/main.png" },
+      "richter": { name: "Richter", number: "66ε", series: "Castlevania", debut: "Ultimate", color: "#1e88e5", tagline: "Sangre de Belmont.", image: "https://www.smashbros.com/assets_v2/img/fighter/richter/main.png" },
+      "king_k_rool": { name: "King K. Rool", number: "67", series: "Donkey Kong", debut: "Ultimate", color: "#2e7d32", tagline: "El rey de los Kremlings.", image: "https://www.smashbros.com/assets_v2/img/fighter/king_k_rool/main.png" },
+      "isabelle": { name: "Canela", number: "68", series: "Animal Crossing", debut: "Ultimate", color: "#fff59d", tagline: "¡Ayuda y diversión!", image: "https://www.smashbros.com/assets_v2/img/fighter/isabelle/main.png" },
+      "incineroar": { name: "Incineroar", number: "69", series: "Pokémon", debut: "Ultimate", color: "#d32f2f", tagline: "El rudo de Alola.", image: "https://www.smashbros.com/assets_v2/img/fighter/incineroar/main.png" },
+      "piranha_plant": { name: "Planta Piraña", number: "70", series: "Super Mario", debut: "Ultimate (DLC)", color: "#388e3c", tagline: "¡Cuidado donde pisas!", image: "https://www.smashbros.com/assets_v2/img/fighter/piranha_plant/main.png" },
+      "joker": { name: "Joker", number: "71", series: "Persona", debut: "Ultimate (DLC)", color: "#b71c1c", tagline: "¡No lo verás venir!", image: "https://www.smashbros.com/assets_v2/img/fighter/joker/main.png" },
+      "hero": { name: "Héroe", number: "72", series: "Dragon Quest", debut: "Ultimate (DLC)", color: "#5c6bc0", tagline: "Héroe de leyenda.", image: "https://www.smashbros.com/assets_v2/img/fighter/hero/main.png" },
+      "banjo_and_kazooie": { name: "Banjo & Kazooie", number: "73", series: "Banjo-Kazooie", debut: "Ultimate (DLC)", color: "#795548", tagline: "Un dúo inseparable.", image: "https://www.smashbros.com/assets_v2/img/fighter/banjo_and_kazooie/main.png" },
+      "terry": { name: "Terry Bogard", number: "74", series: "Fatal Fury", debut: "Ultimate (DLC)", color: "#d32f2f", tagline: "Are you okay?!", image: "https://www.smashbros.com/assets_v2/img/fighter/terry/main.png" },
+      "byleth": { name: "Byleth", number: "75", series: "Fire Emblem", debut: "Ultimate (DLC)", color: "#006064", tagline: "Maestro de reliquias.", image: "https://www.smashbros.com/assets_v2/img/fighter/byleth/main.png" },
+      "min_min": { name: "Min Min", number: "76", series: "ARMS", debut: "Ultimate (DLC)", color: "#fbc02d", tagline: "La reina de los fideos.", image: "https://www.smashbros.com/assets_v2/img/fighter/min_min/main.png" },
+      "steve": { name: "Steve", number: "77", series: "Minecraft", debut: "Ultimate (DLC)", color: "#4e342e", tagline: "Construye tu victoria.", image: "https://www.smashbros.com/assets_v2/img/fighter/steve/main.png" },
+      "sephiroth": { name: "Sefirot", number: "78", series: "Final Fantasy", debut: "Ultimate (DLC)", color: "#9e9e9e", tagline: "El Ángel de un Solo Ala.", image: "https://www.smashbros.com/assets_v2/img/fighter/sephiroth/main.png" },
+      "pyra_mythra": { name: "Pyra / Mythra", number: "79-80", series: "Xenoblade", debut: "Ultimate (DLC)", color: "#ef5350", tagline: "Dos caras de una misma moneda.", image: "https://www.smashbros.com/assets_v2/img/fighter/pyra/main.png" },
+      "kazuya": { name: "Kazuya", number: "81", series: "Tekken", debut: "Ultimate (DLC)", color: "#212121", tagline: "El gen diabólico.", image: "https://www.smashbros.com/assets_v2/img/fighter/kazuya/main.png" },
+      "sora": { name: "Sora", number: "82", series: "Kingdom Hearts", debut: "Ultimate (DLC)", color: "#fbc02d", tagline: "La Llave Espada abre todas las puertas.", image: "https://www.smashbros.com/assets_v2/img/fighter/sora/main.png" }
+    };
+
+    function loadFighter() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id') || 'mario';
+      const data = fighters[id];
+
+      if (data) {
+        document.getElementById('fighter-name').innerText = data.name;
+        document.getElementById('fighter-number').innerText = data.number;
+        document.getElementById('bg-number').innerText = data.number;
+        document.getElementById('fighter-series').innerText = data.series;
+        document.getElementById('fighter-debut').innerText = data.debut;
+        document.getElementById('fighter-tagline').innerText = data.tagline;
+        
+        const img = document.getElementById('fighter-img');
+        // Reiniciamos animación para que se vea cada vez que cambiamos
+        img.style.animation = 'none';
+        img.offsetHeight; // Truco para forzar el reflow
+        img.style.animation = null; 
+        
+        img.src = data.image;
+        img.alt = data.name;
+
+        document.documentElement.style.setProperty('--fighter-accent', data.color);
+      }
+    }
+
+    // Función para navegar entre personajes
+    function changeFighter(direction) {
+      const keys = Object.keys(fighters);
+      const params = new URLSearchParams(window.location.search);
+      const currentId = params.get('id') || 'mario';
+      
+      let currentIndex = keys.indexOf(currentId);
+      let nextIndex = currentIndex + direction;
+
+      // Loop circular: si llegas al final vas al primero, si llegas al inicio vas al último
+      if (nextIndex >= keys.length) nextIndex = 0;
+      if (nextIndex < 0) nextIndex = keys.length - 1;
+
+      const nextId = keys[nextIndex];
+      
+      // Actualizamos la URL sin recargar la página (opcional, pero mejor para la experiencia)
+      const newUrl = window.location.pathname + '?id=' + nextId;
+      window.history.pushState({path: newUrl}, '', newUrl);
+      
+      // Cargamos los nuevos datos
+      loadFighter();
+    }
+
+    window.onload = loadFighter;
+  </script>
+</body>
+</html>

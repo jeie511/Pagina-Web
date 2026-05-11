@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vídeos - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,700;1,700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #000; color: #fff; font-family: 'Roboto', sans-serif; margin: 0; }
+
+    /* --- SECCIÓN HERO (EVERYONE IS HERE) --- */
+    .video-hero {
+      padding: 100px 20px 60px;
+      background: linear-gradient(180deg, #330000 0%, #000 100%);
+      text-align: center;
+    }
+    .featured-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      border: 4px solid #e60012;
+      transition: transform 0.3s ease;
+    }
+    .featured-label {
+      background: #e60012; color: white; display: inline-block;
+      padding: 5px 20px; font-family: 'Roboto Condensed', sans-serif;
+      font-style: italic; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;
+    }
+
+    /* --- CONTENEDORES Y GRIDS --- */
+    .section-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+    
+    .section-header {
+      border-left: 5px solid #e60012;
+      padding-left: 15px; margin-bottom: 30px;
+    }
+    .section-header h2 {
+      font-family: 'Roboto Condensed', sans-serif; text-transform: uppercase;
+      font-style: italic; margin: 0; font-size: 32px;
+    }
+    .pass-tag { font-size: 12px; color: #e60012; font-weight: bold; letter-spacing: 2px; }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    /* --- TARJETAS --- */
+    .video-card {
+      background: #111; border: 1px solid #333; text-decoration: none;
+      color: #fff; transition: 0.3s; display: flex; flex-direction: column;
+    }
+    .video-card:hover { border-color: #e60012; transform: translateY(-5px); background: #1a1a1a; }
+
+    .thumb-wrap { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
+    .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .play-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(230, 0, 18, 0.2); display: flex; align-items: center;
+      justify-content: center; opacity: 0; transition: 0.3s;
+    }
+    .video-card:hover .play-overlay { opacity: 1; }
+
+    .info { padding: 15px; }
+    .info h3 { 
+      margin: 0 0 10px; font-family: 'Roboto Condensed', sans-serif; 
+      text-transform: uppercase; color: #e60012; font-size: 20px;
+    }
+    .info p { margin: 0; font-size: 14px; color: #ccc; line-height: 1.4; }
+
+    footer { text-align: center; padding: 60px; color: #444; border-top: 1px solid #222; }
+  </style>
+</head>
+<body>
+
+  <section class="video-hero">
+    <span class="featured-label">Presentación Histórica</span>
+    <div class="featured-container">
+      <a href="https://www.youtube.com/watch?v=L93H7V-OTQ4" target="_blank" class="video-card" style="border:none;">
+        <div class="thumb-wrap">
+          <img src="https://i.ytimg.com/vi/L93H7V-OTQ4/maxresdefault.jpg" alt="Everyone is Here!">
+          <div class="play-overlay"></div>
+        </div>
+        <div class="info">
+          <h3>¡Todos están aquí! (Everyone is Here)</h3>
+          <p>El tráiler que confirmó el regreso de absolutamente todos los luchadores de la historia de la saga.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Plantel Inicial</h2>
+    </div>
+    <div class="videos-grid">
+      <a href="https://www.youtube.com/watch?v=w32uOwwY970" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/w32uOwwY970/maxresdefault.jpg"></div>
+        <div class="info"><h3>Inkling</h3><p>Anuncio original de Smash para Switch.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=f90H6_H6yVw" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/f90H6_H6yVw/maxresdefault.jpg"></div>
+        <div class="info"><h3>Ridley</h3><p>El esperado villano de Metroid entra en escena.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=8p8706pT8_c" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/8p8706pT8_c/maxresdefault.jpg"></div>
+        <div class="info"><h3>Simon & Richter</h3><p>Los Belmont de Castlevania se unen a la caza.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=cqM92Lf0IJc" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/cqM92Lf0IJc/maxresdefault.jpg"></div>
+        <div class="info"><h3>King K. Rool</h3><p>El némesis de Donkey Kong reclama el trono.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=Io7H8A3-9X8" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/Io7H8A3-9X8/maxresdefault.jpg"></div>
+        <div class="info"><h3>Canela</h3><p>Desde Animal Crossing hasta el fragor de la batalla.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=mtOQsj4LhHE" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/mtOQsj4LhHE/maxresdefault.jpg"></div>
+        <div class="info">
+          <h3>Ken e Incineroar</h3>
+          <p>El rival de Street Fighter y el luchador de Alola en su tráiler conjunto.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="section-header">
+      <span class="pass-tag">DLC</span>
+      <h2>Fighters Pass Vol. 1</h2>
+    </div>
+    <div class="videos-grid">
+      <a href="https://www.youtube.com/watch?v=V-XNAn6unAs" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/V-XNAn6unAs/maxresdefault.jpg"></div>
+        <div class="info"><h3>Planta Piraña</h3><p>Luchador extra de regalo por reserva.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=tI99Zid_FvE" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/tI99Zid_FvE/maxresdefault.jpg"></div>
+        <div class="info"><h3>Joker</h3><p>Persona 5 da el golpe en Smash.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=f-B09W2RshY" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/f-B09W2RshY/maxresdefault.jpg"></div>
+        <div class="info"><h3>Héroe</h3><p>Dragon Quest trae la magia RPG clásica.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=fS2_p99Eez0" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/fS2_p99Eez0/maxresdefault.jpg"></div>
+        <div class="info"><h3>Banjo & Kazooie</h3><p>El regreso a casa más celebrado.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=jW_nK0I02-E" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/jW_nK0I02-E/maxresdefault.jpg"></div>
+        <div class="info"><h3>Terry Bogard</h3><p>The King of Fighters: ¡OK!</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=hBv_i-63I34" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/hBv_i-63I34/maxresdefault.jpg"></div>
+        <div class="info"><h3>Byleth</h3><p>Fire Emblem Three Houses cierra el pase.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <div class="section-header">
+      <span class="pass-tag">DLC</span>
+      <h2>Fighters Pass Vol. 2</h2>
+    </div>
+    <div class="videos-grid">
+      <a href="https://www.youtube.com/watch?v=Kz6lB2e09K0" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/Kz6lB2e09K0/maxresdefault.jpg"></div>
+        <div class="info"><h3>Min Min</h3><p>Estirando el alcance desde ARMS.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=90Jve_lo4Sg" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/90Jve_lo4Sg/maxresdefault.jpg"></div>
+        <div class="info"><h3>Steve & Alex</h3><p>Minecraft revoluciona el juego.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=JPfL_V9L7pU" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/JPfL_V9L7pU/maxresdefault.jpg"></div>
+        <div class="info"><h3>Sefirot</h3><p>El ángel de Final Fantasy VII cae del cielo.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=Yf78H8vH0as" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/Yf78H8vH0as/maxresdefault.jpg"></div>
+        <div class="info"><h3>Pyra / Mythra</h3><p>Las Blades de Xenoblade Chronicles 2.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=KshSscA-R6I" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/KshSscA-R6I/maxresdefault.jpg"></div>
+        <div class="info"><h3>Kazuya</h3><p>El puño de hierro de Tekken llega al abismo.</p></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=asv_66LqP_c" target="_blank" class="video-card">
+        <div class="thumb-wrap"><img src="https://i.ytimg.com/vi/asv_66LqP_c/maxresdefault.jpg"></div>
+        <div class="info"><h3>Sora</h3><p>El final de un viaje increíble con Kingdom Hearts.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2018-2021 Nintendo. Todos los personajes pertenecen a sus respectivos dueños.</p>
+  </footer>
+
+</body>
+</html>
