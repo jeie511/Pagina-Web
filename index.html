@@ -10,9 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="https://ext.same-assets.com/874503100/2598434671.ico">
   <style>
-    /* Estilos añadidos para los cambios solicitados sin eliminar originales */
     .videos-section .videos-carousel {
-      max-width: 500px; /* Tamaño reducido del video */
+      max-width: 500px;
       margin: 0; 
     }
     .video-info-wrapper {
@@ -59,13 +58,76 @@
       text-transform: uppercase;
       border-radius: 4px;
     }
-    /* El blog ahora es clicable */
-    .blog-post {
-      cursor: pointer;
-      transition: transform 0.2s;
+
+    .pass-cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px;
     }
-    .blog-post:hover {
-      transform: scale(1.02);
+    
+    .pass-card {
+      text-decoration: none;
+      color: #fff;
+      flex: 1;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    
+    .pass-card:hover {
+      transform: scale(1.03);
+    }
+    
+    .pass-card-content {
+      padding: 30px;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .pass-card-content::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    
+    .pass-logo, .pass-title, .pass-badge {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .pass-logo {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .pass-title {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    
+    .pass-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: #e60012;
+      color: #fff;
+      padding: 5px 15px;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -174,21 +236,6 @@
     </ul>
   </nav>
 
-  <section class="fighter-banner">
-    <div class="banner-images">
-      <div class="fighter-collage">
-        <div class="fighter-thumb" style="background-image: url('https://ext.same-assets.com/874503100/1814324204.jpeg'); background-size: cover;"></div>
-        <div class="fighter-thumb" style="background-image: url('https://ext.same-assets.com/874503100/2218086036.jpeg'); background-size: cover;"></div>
-        <div class="fighter-thumb" style="background-image: url('https://ext.same-assets.com/874503100/4096180362.jpeg'); background-size: cover;"></div>
-      </div>
-    </div>
-    <div class="banner-text">
-      <div class="banner-logo-text">SUPER SMASH BROS.</div>
-      <p>Todos los videos<br>de presentacion<br>de luchadores</p>
-      <span class="banner-arrow">-></span>
-    </div>
-  </section>
-
   <section class="fighter-pass">
     <div class="pass-cards">
       <a href="compras.html#fighters-pass-1" class="pass-card">
@@ -224,10 +271,6 @@
             </div>
             <p class="video-title">Super Smash Bros. Ultimate - La ultima llave (Nintendo Switch)</p>
           </a>
-          <div class="video-nav">
-            <button class="nav-arrow prev" onclick="changeVideo(-1)">←</button>
-            <button class="nav-arrow next" onclick="changeVideo(1)">→</button>
-          </div>
         </div>
         <div class="btn-ver-mas-wrap">
           <a href="videos.html" class="btn-ver-mas">Ver mas</a>
@@ -248,108 +291,10 @@
       </div>
     </div>
 
-    <div class="video-dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
     <a href="videos.html" class="more-videos">
       <span>Videos</span>
       <span class="arrow">-></span>
     </a>
-  </section>
-
-  <section class="blog-section">
-    <div class="blog-header">
-      <h2 class="blog-title">
-        SUPER<br>
-        SMASH<br>
-        BLOG
-      </h2>
-      <div class="blog-social">
-        <p>Aqui puedes ver mas informacion:</p>
-        <a href="https://x.com/NintendoES" class="social-btn twitter" target="_blank" rel="noopener noreferrer">
-          <span class="icon">X</span>
-          <span>Cuenta oficial en X</span>
-          <span class="arrow">-></span>
-        </a>
-        <a href="https://www.facebook.com/NintendoES/" class="social-btn facebook" target="_blank" rel="noopener noreferrer">
-          <span class="icon">f</span>
-          <span>Cuenta oficial en Facebook</span>
-          <span class="arrow">-></span>
-        </a>
-      </div>
-    </div>
-    <div class="blog-posts">
-      <article class="blog-post" onclick="location.href='blog.html#sakurai-parte-2'">
-        <div class="post-date">
-          <span class="year">2022</span>
-          <span class="month">3</span>
-          <span class="day">31</span>
-        </div>
-        <div class="post-image">
-          <img src="https://ext.same-assets.com/874503100/4097609035.jpeg" alt="Blog post">
-        </div>
-        <div class="post-content">
-          <a href="blog.html#sakurai-parte-2">Rememora las presentaciones de luchadores de Super Smash Bros. con Masahiro Sakurai! (parte 2)</a>
-        </div>
-      </article>
-      <article class="blog-post" onclick="location.href='blog.html#sakurai-parte-1'">
-        <div class="post-date">
-          <span class="year">2022</span>
-          <span class="month">3</span>
-          <span class="day">24</span>
-        </div>
-        <div class="post-image">
-          <img src="https://ext.same-assets.com/874503100/1574492622.jpeg" alt="Blog post">
-        </div>
-        <div class="post-content">
-          <a href="blog.html#sakurai-parte-1">Rememora las presentaciones de luchadores de Super Smash Bros. con Masahiro Sakurai! (parte 1)</a>
-        </div>
-      </article>
-      <article class="blog-post update" onclick="location.href='blog.html#ver-13'">
-        <div class="post-date">
-          <span class="year">2021</span>
-          <span class="month">10</span>
-          <span class="day">5</span>
-        </div>
-        <div class="post-image">
-          <img src="https://ext.same-assets.com/874503100/1407326753.jpeg" alt="Update 13.0">
-          <span class="version-badge">ver. 13.0</span>
-        </div>
-        <div class="post-content">
-          <p>La distribucion de datos de la actualizacion a la version 13.0 comenzo el 19-10-2021. En esta actualizacion se incluyen:</p>
-          <ul>
-            <li><a href="videos.html#sora">Sora</a>, de la serie KINGDOM HEARTS, se une al plantel como parte del contenido descargable de pago.</li>
-            <li>Nuevo escenario: <a href="stages.html#bastion-hueco">Bastion Hueco</a></li>
-            <li>Nuevos disfraces para luchadores Mii.</li>
-          </ul>
-          <a class="update-tag" href="blog.html#ver-13">Ver. 13.0</a>
-        </div>
-      </article>
-      <article class="blog-post update" onclick="location.href='blog.html#ver-12'">
-        <div class="post-date">
-          <span class="year">2021</span>
-          <span class="month">6</span>
-          <span class="day">28</span>
-        </div>
-        <div class="post-image">
-          <img src="https://ext.same-assets.com/874503100/365008754.jpeg" alt="Update 12.0">
-          <span class="version-badge">ver. 12.0</span>
-        </div>
-        <div class="post-content">
-          <p>La distribucion de datos de la actualizacion a la version 12.0 comenzo el 30-06-2021. En esta actualizacion se incluyen:</p>
-          <ul>
-            <li><a href="videos.html#kazuya">Kazuya Mishima</a> se une al plantel como parte del contenido descargable de pago.</li>
-            <li>Nuevo escenario: <a href="stages.html#mishima-dojo">Mishima Dojo</a></li>
-          </ul>
-          <a class="update-tag" href="blog.html#ver-12">Ver. 12.0</a>
-        </div>
-      </article>
-    </div>
   </section>
 
   <div class="back-to-top">
@@ -402,10 +347,6 @@
         <a href="videos.html" class="footer-nav-item">
           <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
           <span>Videos</span>
-        </a>
-        <a href="blog.html" class="footer-nav-item">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          <span>Blog de Super Smash Bros.</span>
         </a>
       </div>
     </nav>
