@@ -3,77 +3,751 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Musica - Super Smash Bros. Ultimate</title>
+  <title>Musica | Super Smash Bros. Ultimate - Sitio web oficial | Nintendo Switch</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Navegación */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.9);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #333;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 20px;
+    }
+
+    .header-link {
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .header-link:hover {
+      color: #e60012;
+    }
+
+    /* Hero Section */
     .music-hero {
-      padding: 140px 20px 70px;
+      position: relative;
+      padding: 120px 20px 60px;
       text-align: center;
-      background: linear-gradient(135deg, #00131d 0%, #00405a 50%, #050505 100%);
+      background: url('https://ext.same-assets.com/874503100/209632841.jpeg') no-repeat center top;
+      background-size: cover;
+      min-height: 300px;
+    }
+
+    .music-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), #000);
+    }
+
+    .music-hero-content {
+      position: relative;
+      z-index: 1;
     }
 
     .music-hero h1 {
       font-family: 'Roboto Condensed', sans-serif;
-      font-size: clamp(42px, 8vw, 84px);
+      font-size: 64px;
+      font-weight: 700;
       font-style: italic;
+      margin: 0;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      letter-spacing: -2px;
+    }
+
+    .music-hero p {
+      font-size: 18px;
+      max-width: 800px;
+      margin: 20px auto;
+      line-height: 1.6;
+    }
+
+    /* Music Section */
+    .music-list-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
     }
 
     .track-list {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 50px 20px 100px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .track {
-      background: #141414;
-      border-left: 4px solid #00b7ff;
-      padding: 20px;
-      border-radius: 10px;
+    .track-item {
+      display: flex;
+      align-items: center;
+      background-color: #111;
+      border-left: 4px solid #e60012;
+      padding: 15px 25px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
     }
 
-    .track h2 {
-      font-size: 18px;
-      margin-bottom: 8px;
+    .track-item:hover {
+      background-color: #222;
+      transform: translateX(5px);
+    }
+
+    .track-info {
+      flex-grow: 1;
+    }
+
+    .track-name {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .track-meta {
+      display: flex;
+      gap: 30px;
+    }
+
+    .track-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .track-meta-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .track-meta-value {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .track-play {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .track-play::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 55%;
+      transform: translate(-50%, -50%);
+      border-style: solid;
+      border-width: 8px 0 8px 12px;
+      border-color: transparent transparent transparent #fff;
+    }
+
+    /* Estilo para el texto final solicitado */
+    .more-tracks-text {
+      text-align: center;
+      margin-top: 40px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      color: #e60012;
+    }
+
+    .play-all-container {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 100;
+    }
+
+    .play-all-btn {
+      display: block;
+      background-color: #e60012;
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-style: italic;
+      box-shadow: 0 10px 20px rgba(230,0,18,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .play-all-btn:hover {
+      transform: scale(1.05);
+      background-color: #ff0015;
+    }
+
+    .music-footer {
+      padding: 60px 20px;
+      text-align: center;
+      border-top: 1px solid #222;
+      color: #666;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
+
   <header class="header">
     <div class="header-left">
-      <a href="index.html" class="nintendo-logo">
-        <svg width="100" height="28" viewBox="0 0 100 28" fill="white">
-          <text x="0" y="20" font-family="Arial Black, sans-serif" font-size="16" font-weight="bold">Nintendo</text>
-        </svg>
-      </a>
+      <a href="index.html" class="header-link" style="font-size: 20px; color: #e60012;">Smash Bros.</a>
     </div>
     <div class="header-right">
       <a href="index.html" class="header-link">Inicio</a>
-      <a href="videos.html" class="header-link">Videos</a>
+      <a href="fighters.html" class="header-link">Luchadores</a>
+      <a href="stages.html" class="header-link">Escenarios</a>
     </div>
   </header>
 
-  <section class="music-hero">
-    <h1>Musica</h1>
-    <p>Mas de 800 temas entre clasicos, remixes y canciones iconicas de Nintendo y terceros.</p>
+  <header class="music-hero">
+    <div class="music-hero-content">
+      <h1>Música</h1>
+      <p>Disfruta de una selección de temas legendarios de la historia de los videojuegos, arreglados por compositores de renombre para Super Smash Bros. Ultimate.</p>
+    </div>
+  </header>
+
+  <section class="music-list-section">
+    <div class="track-list">
+
+      <a href="https://www.youtube.com/watch?v=RrSTcRvPyhI" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Spiral Mountain</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Banjo-Kazooie</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Grant Kirkhope</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=_9i-yYxrL2A" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">How to Play</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Super Smash Bros. Melee</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Motoi Sakuraba</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=nTgsO-Xx8Uc" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Nintendo Switch Presentation 2017 Trailer BGM</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">The Legend of Zelda</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Ryo Nagamatsu</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=OtSftqQMIoY" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">King Bowser</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Super Mario Bros. 3</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Koji Kondo</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=iEMxq-Ya5OM" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Seaskape</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Splatoon</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Hirokazu Tanaka. ex</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=z-pfpTx6b1Q" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Guile Stage</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Street Fighter II</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Yuzo Koshiro</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=Uki48ArEty8" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Battle! (Wild Pokemon)</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Pokémon Sun & Pokémon Moon</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Hiroyuki Kawada</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=dmVkNeliuH8" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Lost Painting</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Castlevania: Symphony of the Night</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Tetsuya Shibata</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=-zKqvcwnmGA" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Flash Man Stage</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Mega Man 2</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Keiichi Okabe</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=206XFPy8XuM" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Id (Purpose)</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Fire Emblem Awakening</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Takeshi Kuramochi</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=GRAAwIe17jw" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Afternoon on the Island</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Tomodachi Life / Tomodachi Collection</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Masafumi Takada</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=pYF33jr_57Y" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Battle! (Steven)</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Pokémon Omega Ruby & Pokémon Alpha Sapphire</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Soshi Abe</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=6xVApsB9fgc" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Title Theme</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Animal Crossing: Happy Home Designer</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Kazumi Totaka</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=1fS187TOV7Q" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Main Theme</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Pikmin</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Hideki Sakamoto</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=tBBt7D-1wnw" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Fortress Boss (Super Mario Bros. 3)</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Super Mario Bros. 3</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Akihiro Honda (Cygames)</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=nZxXhi78D-A" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Main Theme</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Yoshi's New Island</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Shota Kageyama</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=tpUQfPmD4bg" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Gear Up For...</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Fire Emblem Heroes</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Hiroki Morishita</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=Wlb-dr84nrQ" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Gang-Plank Galleon</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Donkey Kong Country</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">ACE (TOMOri Kudo / CHiCO)</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=WzWFQD4x3yo" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Bloody Tears / Monster Dance</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Castlevania II: Simon's Quest</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Michiko Naruke</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=APSRqnT8hvo" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Galaga Medley</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Galaga</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Yusuke Takahama</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=W3qmEh9jWbM" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">F-ZERO Medley</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">F-ZERO</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Takenobu Mitsuyoshi</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=ZPFelva0Pcg" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Snake Eater</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Metal Gear Solid 3: Snake Eater</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Nobuko Toda</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=uG5NSiPzfx8" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Mega Man 4 Medley</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Mega Man 4</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Jun Senoue</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=69EOkLHpRV0" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">City Trial</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Kirby Air Ride</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Noriyuki Iwadare</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=kN-ChfixiV0" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Noisy Notebook</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Snipperclips</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Arreglos a cargo de</span>
+              <span class="track-meta-value">Maki Kirioka</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=X8HVnaz8OdE" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Bomb Rush Blush</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Splatoon</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Tomoya Ohtani</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=2fj6V2rOpT8" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Brinstar Depths</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Metroid</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Yasushi Asada</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=XiQxyjpSAkk" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Vega Stage</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">Street Fighter II</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Yoko Shimomura</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=cqM92Lf0IJc" target="_blank" rel="noopener noreferrer" class="track-item">
+        <div class="track-info">
+          <div class="track-name">Main Theme</div>
+          <div class="track-meta">
+            <div class="track-meta-item">
+              <span class="track-meta-label">Original de</span>
+              <span class="track-meta-value">The Legend of Zelda: Breath of the Wild</span>
+            </div>
+            <div class="track-meta-item">
+              <span class="track-meta-label">Compositor</span>
+              <span class="track-meta-value">Yoshino Aoki</span>
+            </div>
+          </div>
+        </div>
+        <div class="track-play"></div>
+      </a>
+
+    </div>
+
+    <div class="more-tracks-text">
+      Y muchos más!
+    </div>
   </section>
 
-  <main class="track-list">
-    <article class="track"><h2>Ground Theme</h2><p>Super Mario Bros. 2</p></article>
-    <article class="track"><h2>Jump Up, Super Star!</h2><p>Super Mario Odyssey</p></article>
-    <article class="track"><h2>Vampire Killer</h2><p>Castlevania</p></article>
-    <article class="track"><h2>Vs. Ridley</h2><p>Metroid</p></article>
-    <article class="track"><h2>Kass's Theme</h2><p>The Legend of Zelda: Breath of the Wild</p></article>
-    <article class="track"><h2>Splattack!</h2><p>Splatoon</p></article>
-  </main>
+  <div class="play-all-container">
+    <a href="#" class="play-all-btn" id="playAllBtn">
+      <span>Reproducir todo (NO FUNCIONA)</span>
+    </a>
+  </div>
 
-  <script src="main.js"></script>
+  <footer class="music-footer">
+    <p>&copy; 2018 Nintendo. Original Game: &copy; Nintendo / HAL Laboratory, Inc.</p>
+    <p>La música de este sitio es propiedad de sus respectivos dueños.</p>
+  </footer>
+
 </body>
 </html>

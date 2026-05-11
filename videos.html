@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script src="js/auth.js"></script>
+  <script>verificarAcceso();</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vídeos - Super Smash Bros. Ultimate</title>
@@ -63,6 +66,7 @@
       <a href="fighters.html">Luchadores</a>
       <a href="stages.html">Escenarios</a>
       <a href="videos.html" class="active">Vídeos</a>
+      <button onclick="cerrarSesion()" style="margin-left:20px; background:#e60012; color:white; border:none; padding:5px; cursor:pointer;">SALIR</button>
     </div>
   </nav>
 
