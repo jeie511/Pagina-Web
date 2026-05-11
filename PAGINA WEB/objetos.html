@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Objetos - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .items-hero {
+      padding: 140px 20px 70px;
+      text-align: center;
+      background: linear-gradient(135deg, #261800 0%, #5f3a00 50%, #080808 100%);
+    }
+
+    .items-hero h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(42px, 8vw, 84px);
+      font-style: italic;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .items-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 50px 20px 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+
+    .info-card {
+      background: #181818;
+      border: 1px solid #383838;
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .info-card h2 {
+      color: #ffcc00;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="index.html" class="nintendo-logo">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="white">
+          <text x="0" y="20" font-family="Arial Black, sans-serif" font-size="16" font-weight="bold">Nintendo</text>
+        </svg>
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="header-link">Inicio</a>
+      <a href="como-jugar.html" class="header-link">Como jugar</a>
+    </div>
+  </header>
+
+  <section class="items-hero">
+    <h1>Objetos</h1>
+    <p>Parte del caos y de la diversion de Smash. Activalos, desactivalos o mezcla solo tus favoritos.</p>
+  </section>
+
+  <main class="items-grid">
+    <article class="info-card">
+      <h2>Smash Ball</h2>
+      <p>Rompela primero para liberar tu Smash Final y lanzar un ataque cinematografico.</p>
+    </article>
+    <article class="info-card">
+      <h2>Poke Ball</h2>
+      <p>Invoca Pokemon que alteran el ritmo del combate con ataques, apoyo o control del escenario.</p>
+    </article>
+    <article class="info-card">
+      <h2>Asistente</h2>
+      <p>Llama a personajes invitados para poner presion extra sobre todos los jugadores.</p>
+    </article>
+    <article class="info-card">
+      <h2>Objetos curativos</h2>
+      <p>Comida, corazones y hadas ayudan a recuperar dano y alargar la partida.</p>
+    </article>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como jugar - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .simple-hero {
+      padding: 140px 20px 80px;
+      text-align: center;
+      background: linear-gradient(135deg, #120000 0%, #5c0008 45%, #050505 100%);
+    }
+
+    .simple-hero h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(42px, 8vw, 84px);
+      font-style: italic;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .simple-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+
+    .simple-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .simple-card {
+      background: #151515;
+      border: 1px solid #2b2b2b;
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .simple-card h2 {
+      color: #ffcc00;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="index.html" class="nintendo-logo">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="white">
+          <text x="0" y="20" font-family="Arial Black, sans-serif" font-size="16" font-weight="bold">Nintendo</text>
+        </svg>
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="header-link">Inicio</a>
+      <a href="fighters.html" class="header-link">Luchadores</a>
+      <a href="stages.html" class="header-link">Escenarios</a>
+    </div>
+  </header>
+
+  <section class="simple-hero">
+    <h1>Como jugar</h1>
+    <p>Una guia rapida para entrar al combate y entender las reglas base.</p>
+  </section>
+
+  <main class="simple-page">
+    <div class="simple-grid">
+      <article class="simple-card">
+        <h2>Objetivo</h2>
+        <p>Haz subir el porcentaje de tus rivales y expulsalos del escenario. Cuanto mayor sea el dano acumulado, mas lejos saldran disparados.</p>
+      </article>
+      <article class="simple-card">
+        <h2>Ataques</h2>
+        <p>Combina ataques normales, especiales, agarres y ataques aereos para presionar, castigar errores y cerrar stocks.</p>
+      </article>
+      <article class="simple-card">
+        <h2>Defensa</h2>
+        <p>El escudo, el esquive y el salto son igual de importantes que golpear. Aprender cuando no atacar marca la diferencia.</p>
+      </article>
+      <article class="simple-card">
+        <h2>Modos</h2>
+        <p>Puedes jugar por tiempo, por stocks o por energia, tanto en local como online. Ajusta reglas y objetos a tu estilo.</p>
+      </article>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

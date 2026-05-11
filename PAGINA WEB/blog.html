@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .blog-hero {
+      padding: 140px 20px 70px;
+      text-align: center;
+      background: linear-gradient(135deg, #130013 0%, #520024 50%, #050505 100%);
+    }
+
+    .blog-hero h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(42px, 8vw, 84px);
+      font-style: italic;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .blog-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 50px 20px 100px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .entry {
+      background: #171717;
+      border: 1px solid #2f2f2f;
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .entry h2 {
+      margin-bottom: 10px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #fff;
+      text-decoration: none;
+      background: #2a2a2a;
+      padding: 12px 18px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="index.html" class="nintendo-logo">
+        <svg width="100" height="28" viewBox="0 0 100 28" fill="white">
+          <text x="0" y="20" font-family="Arial Black, sans-serif" font-size="16" font-weight="bold">Nintendo</text>
+        </svg>
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="header-link">Inicio</a>
+      <a href="videos.html" class="header-link">Videos</a>
+    </div>
+  </header>
+
+  <section class="blog-hero">
+    <h1>Super Smash Blog</h1>
+    <p>Resumen de las noticias que ya aparecian destacadas en la portada, ahora con destino real.</p>
+  </section>
+
+  <main class="blog-layout">
+    <article class="entry" id="sakurai-parte-2">
+      <h2>Rememora las presentaciones de luchadores con Masahiro Sakurai (parte 2)</h2>
+      <p>Recopilacion de anuncios, momentos clave y contexto adicional sobre los luchadores mas recientes.</p>
+    </article>
+    <article class="entry" id="sakurai-parte-1">
+      <h2>Rememora las presentaciones de luchadores con Masahiro Sakurai (parte 1)</h2>
+      <p>Un vistazo a la historia de la serie y al crecimiento del roster desde entregas anteriores.</p>
+    </article>
+    <article class="entry" id="ver-13">
+      <h2>Actualizacion ver. 13.0</h2>
+      <p>Sora se incorpora al plantel y llega Bastion Hueco junto con disfraces Mii adicionales.</p>
+    </article>
+    <article class="entry" id="ver-12">
+      <h2>Actualizacion ver. 12.0</h2>
+      <p>Kazuya Mishima entra en combate y se suma el escenario Mishima Dojo.</p>
+    </article>
+    <section class="entry" id="redes">
+      <h2>Redes y comunidad</h2>
+      <div class="social-links">
+        <a href="https://x.com/NintendoES" target="_blank" rel="noopener noreferrer">Cuenta oficial en X</a>
+        <a href="https://www.facebook.com/NintendoES/" target="_blank" rel="noopener noreferrer">Cuenta oficial en Facebook</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

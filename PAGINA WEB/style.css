@@ -262,6 +262,14 @@ body {
   overflow: hidden;
 }
 
+.fighter-banner:focus-visible,
+.main-video-link:focus-visible,
+.dot:focus-visible,
+.fighter-card[role="link"]:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 4px;
+}
+
 .banner-images {
   flex: 1;
   position: relative;
@@ -388,6 +396,12 @@ body {
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 30px;
+}
+
+.main-video-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 .video-thumbnail {

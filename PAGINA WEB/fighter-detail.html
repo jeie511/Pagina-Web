@@ -1,9 +1,9 @@
-6<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mario - Super Smash Bros. Ultimate</title>
+  <title>Ficha de luchador - Super Smash Bros. Ultimate</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&family=Roboto:wght@900&display=swap" rel="stylesheet">
   <style>
@@ -22,14 +22,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 75%, #444 0%, #000 85%);
+      background: radial-gradient(circle at 75%, #333 0%, #000 80%);
     }
 
     .bg-number {
       position: absolute;
       font-size: 45vw;
       font-weight: 900;
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.03);
       left: 5%;
       line-height: 1;
       z-index: 1;
@@ -39,17 +39,16 @@
     .fighter-img {
       position: relative;
       height: 85vh;
-      z-index: 4;
-      filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.9));
-      animation: fadeInRight 0.8s ease-out;
+      z-index: 2;
+      filter: drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.9));
     }
 
     .info-container {
       position: absolute;
       left: 8%;
       bottom: 10%;
-      z-index: 5;
-      animation: fadeInLeft 0.8s ease-out;
+      z-index: 3;
+      max-width: 40%;
     }
 
     .number-badge {
@@ -65,22 +64,21 @@
 
     .name-title {
       font-family: 'Roboto Condensed', sans-serif;
-      font-size: clamp(50px, 10vw, 120px);
+      font-size: clamp(48px, 8vw, 110px);
       font-style: italic;
       text-transform: uppercase;
       margin: 10px 0 15px 0;
-      line-height: 0.8;
-      text-shadow: 6px 6px 0px #e60012;
+      line-height: 0.85;
+      text-shadow: 6px 6px 0 #e60012;
     }
 
     .extra-details {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-top: 25px;
+      gap: 16px;
+      margin-top: 20px;
     }
 
-    /* NOMBRE DE LA SAGA EN TEXTO */
     .series-name {
       font-family: 'Roboto Condensed', sans-serif;
       font-size: 24px;
@@ -134,39 +132,64 @@
       color: #fff;
     }
 
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(100px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes fadeInLeft {
-      from { opacity: 0; transform: translateX(-100px); }
-      to { opacity: 1; transform: translateX(0); }
+    @media (max-width: 900px) {
+      body {
+        overflow: auto;
+      }
+
+      .fighter-detail-page {
+        min-height: 100vh;
+        height: auto;
+        padding: 120px 20px 40px;
+        flex-direction: column;
+      }
+
+      .fighter-img {
+        height: auto;
+        width: min(90vw, 460px);
+      }
+
+      .info-container {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        max-width: 100%;
+        margin-top: 24px;
+        text-align: center;
+      }
+
+      .series-name {
+        margin: 0 auto;
+      }
+
+      .debut-info {
+        border-left: 0;
+        border-top: 3px solid #e60012;
+        padding-left: 0;
+        padding-top: 12px;
+      }
     }
   </style>
 </head>
 <body>
+  <a href="fighters.html" class="btn-back">Volver</a>
 
-  <a href="fighters.html" class="btn-back">◀ BACK</a>
-
-  <div class="fighter-detail-page">
-    <div class="bg-number">01</div>
-    
-    <img src="https://www.smashbros.com/assets_v2/img/fighter/mario/main.png" alt="Mario" class="fighter-img">
-
+  <div class="fighter-detail-page" data-fighter-detail>
+    <div class="bg-number" data-number>--</div>
+    <img src="" alt="Luchador" class="fighter-img" data-image>
     <div class="info-container">
-      <div class="number-badge">01</div>
-      <h1 class="name-title">MARIO</h1>
-
+      <div class="number-badge" data-number>--</div>
+      <h1 class="name-title" data-name>Luchador</h1>
       <div class="extra-details">
-        <div class="series-name">Super Mario Series</div>
-        
+        <div class="series-name" data-series>Universo Super Smash Bros.</div>
         <div class="debut-info">
-          <span class="debut-label">Debut en la serie Smash</span>
-          <span class="debut-game">Super Smash Bros. (1999)</span>
+          <span class="debut-label">Entrada disponible</span>
+          <span class="debut-game" data-debut>Disponible en Super Smash Bros. Ultimate</span>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="main.js"></script>
 </body>
 </html>
