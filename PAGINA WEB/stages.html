@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escenarios – Super Smash Bros. Ultimate</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,700;1,700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #000; color: #fff; margin: 0; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+    
+    /* Header Estilo Nintendo */
+    .header { 
+      background: #000; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-link { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: bold; text-transform: uppercase; }
+    .nintendo-logo { font-weight: bold; text-transform: uppercase; color: #fff; text-decoration: none; font-size: 20px; letter-spacing: 2px; }
+
+    /* Hero Section */
+    .stages-hero {
+      background: #000 url('https://www.smashbros.com/assets_v2/img/stage/main_bg.jpg') no-repeat center;
+      background-size: cover;
+      padding: 80px 20px 40px;
+      text-align: center;
+      border-bottom: 4px solid #ffaa00;
+    }
+
+    /* Grid de Escenarios */
+    .stages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 15px;
+      padding: 40px 20px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Tarjeta de Escenario */
+    .stage-card {
+      position: relative;
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      cursor: pointer;
+    }
+
+    .stage-card:hover {
+      transform: scale(1.05);
+      border-color: #ffaa00;
+      z-index: 10;
+      box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+    }
+
+    .stage-card img { width: 100%; height: 100%; object-fit: cover; transition: filter 0.3s; }
+    .stage-card:hover img { filter: brightness(1.1); }
+
+    .stage-info {
+      position: absolute;
+      bottom: 0; width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+      padding: 15px 0 8px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-style: italic;
+      text-align: center;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .stage-number {
+      position: absolute;
+      top: 0; left: 0;
+      background: #ffaa00;
+      color: #000;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      font-family: 'Roboto Condensed', sans-serif;
+      z-index: 2;
+    }
+
+    /* MODAL DE PREVISUALIZACIÓN */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.92);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      max-width: 85%;
+      max-height: 75%;
+      border: 4px solid #ffaa00;
+      box-shadow: 0 0 50px rgba(255,170,0,0.2);
+      transform-origin: center;
+      animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-caption {
+      margin-top: 25px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 40px;
+      font-style: italic;
+      text-transform: uppercase;
+      color: #ffaa00;
+      text-shadow: 0 0 15px rgba(0,0,0,0.8);
+      letter-spacing: 2px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 30px;
+      color: #fff;
+      font-size: 60px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .close-modal:hover { color: #ffaa00; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .footer { padding: 60px 20px; text-align: center; background: #000; color: #666; font-size: 12px; border-top: 1px solid #222; }
+  </style>
+</head>
+<body>
+
+  <div id="stageModal" class="modal" onclick="closePreview()">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="imgFull">
+    <div id="caption" class="modal-caption"></div>
+  </div>
+
+  <header class="header">
+    <div class="header-left"><a href="index.html" class="nintendo-logo">Nintendo</a></div>
+    <div class="header-right">
+      <a href="index.html" class="header-link">Inicio</a>
+      <a href="fighters.html" class="header-link">Luchadores</a>
+    </div>
+  </header>
+
+  <section class="stages-hero">
+    <h1 style="font-size: 60px; font-style: italic; font-family: 'Roboto Condensed'; margin: 0; letter-spacing: 4px;">ESCENARIOS</h1>
+  </section>
+
+  <main class="stages-grid" id="mainGrid">
+    <div class="stage-card"><span class="stage-number">01</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img001.jpg"><div class="stage-info">Campo de batalla</div></div>
+    <div class="stage-card"><span class="stage-number">02</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img002.jpg"><div class="stage-info">Gran campo de batalla</div></div>
+    <div class="stage-card"><span class="stage-number">03</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img003.jpg"><div class="stage-info">Destino final</div></div>
+    <div class="stage-card"><span class="stage-number">04</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img004.jpg"><div class="stage-info">Castillo de Peach</div></div>
+    <div class="stage-card"><span class="stage-number">05</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img005.jpg"><div class="stage-info">Selva de Kongo</div></div>
+    <div class="stage-card"><span class="stage-number">06</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img006.jpg"><div class="stage-info">Castillo de Hyrule</div></div>
+    <div class="stage-card"><span class="stage-number">07</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img007.jpg"><div class="stage-info">Planet Zebes</div></div>
+    <div class="stage-card"><span class="stage-number">08</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img008.jpg"><div class="stage-info">Isla de Yoshi</div></div>
+    <div class="stage-card"><span class="stage-number">09</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img009.jpg"><div class="stage-info">Dream Land</div></div>
+    <div class="stage-card"><span class="stage-number">10</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img010.jpg"><div class="stage-info">Sector Z</div></div>
+    <div class="stage-card"><span class="stage-number">11</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img011.jpg"><div class="stage-info">Castillo de Saffron</div></div>
+    <div class="stage-card"><span class="stage-number">12</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img012.jpg"><div class="stage-info">Mushroom Kingdom</div></div>
+    <div class="stage-card"><span class="stage-number">13</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img013.jpg"><div class="stage-info">Castillo de Peach (Melee)</div></div>
+    <div class="stage-card"><span class="stage-number">14</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img014.jpg"><div class="stage-info">Isla de Yoshi (Melee)</div></div>
+    <div class="stage-card"><span class="stage-number">15</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img015.jpg"><div class="stage-info">Cataratas del Congo</div></div>
+    <div class="stage-card"><span class="stage-number">16</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img016.jpg"><div class="stage-info">Montaña helada</div></div>
+    <div class="stage-card"><span class="stage-number">17</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img017.jpg"><div class="stage-info">Jardín de Kirby</div></div>
+    <div class="stage-card"><span class="stage-number">18</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img018.jpg"><div class="stage-info">Great Bay</div></div>
+    <div class="stage-card"><span class="stage-number">19</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img019.jpg"><div class="stage-info">Templo</div></div>
+    <div class="stage-card"><span class="stage-number">20</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img020.jpg"><div class="stage-info">Brinstar</div></div>
+    <div class="stage-card"><span class="stage-number">21</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img021.jpg"><div class="stage-info">Yoshi's Story</div></div>
+    <div class="stage-card"><span class="stage-number">22</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img022.jpg"><div class="stage-info">Fuente de los Sueños</div></div>
+    <div class="stage-card"><span class="stage-number">23</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img023.jpg"><div class="stage-info">Corneria</div></div>
+    <div class="stage-card"><span class="stage-number">24</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img024.jpg"><div class="stage-info">Venom</div></div>
+    <div class="stage-card"><span class="stage-number">25</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img025.jpg"><div class="stage-info">Pokémon Stadium</div></div>
+    <div class="stage-card"><span class="stage-number">26</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img026.jpg"><div class="stage-info">Onett</div></div>
+    <div class="stage-card"><span class="stage-number">27</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img027.jpg"><div class="stage-info">Mute City SNES</div></div>
+    <div class="stage-card"><span class="stage-number">28</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img028.jpg"><div class="stage-info">Mundo de los Yoshi</div></div>
+    <div class="stage-card"><span class="stage-number">29</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img029.jpg"><div class="stage-info">Abismo de Brinstar</div></div>
+    <div class="stage-card"><span class="stage-number">30</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img030.jpg"><div class="stage-info">Pokémon Stadium 2</div></div>
+    <div class="stage-card"><span class="stage-number">31</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img031.jpg"><div class="stage-info">Port Town Aero Dive</div></div>
+    <div class="stage-card"><span class="stage-number">32</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img032.jpg"><div class="stage-info">Castillo sitiado</div></div>
+    <div class="stage-card"><span class="stage-number">33</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img033.jpg"><div class="stage-info">WarioWare, Inc.</div></div>
+    <div class="stage-card"><span class="stage-number">34</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img034.jpg"><div class="stage-info">Pueblo Smash</div></div>
+    <div class="stage-card"><span class="stage-number">35</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img035.jpg"><div class="stage-info">Nueva Porc</div></div>
+    <div class="stage-card"><span class="stage-number">36</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img036.jpg"><div class="stage-info">Cumbre</div></div>
+    <div class="stage-card"><span class="stage-number">37</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img037.jpg"><div class="stage-info">Sobrevuelo</div></div>
+    <div class="stage-card"><span class="stage-number">38</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img038.jpg"><div class="stage-info">Norfair</div></div>
+    <div class="stage-card"><span class="stage-number">39</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img039.jpg"><div class="stage-info">Fragata Orpheon</div></div>
+    <div class="stage-card"><span class="stage-number">40</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img040.jpg"><div class="stage-info">Yoshi's Island</div></div>
+    <div class="stage-card"><span class="stage-number">41</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img041.jpg"><div class="stage-info">Halberd</div></div>
+    <div class="stage-card"><span class="stage-number">42</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img042.jpg"><div class="stage-info">Lylat Cruise</div></div>
+    <div class="stage-card"><span class="stage-number">43</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img043.jpg"><div class="stage-info">Pokémon Stadium 2</div></div>
+    <div class="stage-card"><span class="stage-number">44</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img044.jpg"><div class="stage-info">Castillo de Drácula</div></div>
+    <div class="stage-card"><span class="stage-number">45</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img045.jpg"><div class="stage-info">Mansión de Luigi</div></div>
+    <div class="stage-card"><span class="stage-number">46</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img046.jpg"><div class="stage-info">Pirámide</div></div>
+    <div class="stage-card"><span class="stage-number">47</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img047.jpg"><div class="stage-info">75m</div></div>
+    <div class="stage-card"><span class="stage-number">48</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img048.jpg"><div class="stage-info">Mario Bros.</div></div>
+    <div class="stage-card"><span class="stage-number">49</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img049.jpg"><div class="stage-info">Hanenbow</div></div>
+    <div class="stage-card"><span class="stage-number">50</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img050.jpg"><div class="stage-info">Zona extraplana X</div></div>
+    <div class="stage-card"><span class="stage-number">51</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img051.jpg"><div class="stage-info">Green Hill Zone</div></div>
+    <div class="stage-card"><span class="stage-number">52</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img052.jpg"><div class="stage-info">Castillo de Wily</div></div>
+    <div class="stage-card"><span class="stage-number">53</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img053.jpg"><div class="stage-info">Reino del Cielo</div></div>
+    <div class="stage-card"><span class="stage-number">54</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img054.jpg"><div class="stage-info">Boxing Ring</div></div>
+    <div class="stage-card"><span class="stage-number">55</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img055.jpg"><div class="stage-info">Gaur Plain</div></div>
+    <div class="stage-card"><span class="stage-number">56</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img056.jpg"><div class="stage-info">Circuito de Mario Kart</div></div>
+    <div class="stage-card"><span class="stage-number">57</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img057.jpg"><div class="stage-info">Nidodepirañas</div></div>
+    <div class="stage-card"><span class="stage-number">58</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img058.jpg"><div class="stage-info">Windy Hill</div></div>
+    <div class="stage-card"><span class="stage-number">59</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img059.jpg"><div class="stage-info">Rosalina's Ice World</div></div>
+    <div class="stage-card"><span class="stage-number">60</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img060.jpg"><div class="stage-info">Palutena's Temple</div></div>
+    <div class="stage-card"><span class="stage-number">61</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img061.jpg"><div class="stage-info">The Great Cave Offensive</div></div>
+    <div class="stage-card"><span class="stage-number">62</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img062.jpg"><div class="stage-info">Kalos Pokémon League</div></div>
+    <div class="stage-card"><span class="stage-number">63</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img063.jpg"><div class="stage-info">Coliseum</div></div>
+    <div class="stage-card"><span class="stage-number">64</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img064.jpg"><div class="stage-info">Gamer</div></div>
+    <div class="stage-card"><span class="stage-number">65</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img065.jpg"><div class="stage-info">Garden of Hope</div></div>
+    <div class="stage-card"><span class="stage-number">66</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img066.jpg"><div class="stage-info">Town and City</div></div>
+    <div class="stage-card"><span class="stage-number">67</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img067.jpg"><div class="stage-info">Wii Fit Studio</div></div>
+    <div class="stage-card"><span class="stage-number">68</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img068.jpg"><div class="stage-info">Distant Planet</div></div>
+    <div class="stage-card"><span class="stage-number">69</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img069.jpg"><div class="stage-info">Smashville</div></div>
+    <div class="stage-card"><span class="stage-number">70</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img070.jpg"><div class="stage-info">Skyloft</div></div>
+    <div class="stage-card"><span class="stage-number">71</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img071.jpg"><div class="stage-info">Tortimer Island</div></div>
+    <div class="stage-card"><span class="stage-number">72</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img072.jpg"><div class="stage-info">3D Land</div></div>
+    <div class="stage-card"><span class="stage-number">73</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img073.jpg"><div class="stage-info">Golden Plains</div></div>
+    <div class="stage-card"><span class="stage-number">74</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img074.jpg"><div class="stage-info">Rainbow Road</div></div>
+    <div class="stage-card"><span class="stage-number">75</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img075.jpg"><div class="stage-info">Paper Mario</div></div>
+    <div class="stage-card"><span class="stage-number">76</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img076.jpg"><div class="stage-info">Gerudo Valley</div></div>
+    <div class="stage-card"><span class="stage-number">77</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img077.jpg"><div class="stage-info">Spirit Train</div></div>
+    <div class="stage-card"><span class="stage-number">78</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img078.jpg"><div class="stage-info">Dream Land GB</div></div>
+    <div class="stage-card"><span class="stage-number">79</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img079.jpg"><div class="stage-info">Unova Pokémon League</div></div>
+    <div class="stage-card"><span class="stage-number">80</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img080.jpg"><div class="stage-info">Prism Tower</div></div>
+    <div class="stage-card"><span class="stage-number">81</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img081.jpg"><div class="stage-info">Mute City</div></div>
+    <div class="stage-card"><span class="stage-number">82</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img082.jpg"><div class="stage-info">Magicant</div></div>
+    <div class="stage-card"><span class="stage-number">83</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img083.jpg"><div class="stage-info">Arena Ferox</div></div>
+    <div class="stage-card"><span class="stage-number">84</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img084.jpg"><div class="stage-info">Reset Bomb Forest</div></div>
+    <div class="stage-card"><span class="stage-number">85</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img085.jpg"><div class="stage-info">Find Mii</div></div>
+    <div class="stage-card"><span class="stage-number">86</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img086.jpg"><div class="stage-info">Tomodachi Life</div></div>
+    <div class="stage-card"><span class="stage-number">87</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img087.jpg"><div class="stage-info">Balloon Fight</div></div>
+    <div class="stage-card"><span class="stage-number">88</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img088.jpg"><div class="stage-info">Living Room</div></div>
+    <div class="stage-card"><span class="stage-number">89</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img089.jpg"><div class="stage-info">PictoChat 2</div></div>
+    <div class="stage-card"><span class="stage-number">90</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img090.jpg"><div class="stage-info">Mushroom Kingdom U</div></div>
+    <div class="stage-card"><span class="stage-number">91</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img091.jpg"><div class="stage-info">Mario Galaxy</div></div>
+    <div class="stage-card"><span class="stage-number">92</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img092.jpg"><div class="stage-info">Skyloft</div></div>
+    <div class="stage-card"><span class="stage-number">93</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img093.jpg"><div class="stage-info">The Great Tower</div></div>
+    <div class="stage-card"><span class="stage-number">94</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img094.jpg"><div class="stage-info">Boxing Ring</div></div>
+    <div class="stage-card"><span class="stage-number">95</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img095.jpg"><div class="stage-info">Gaur Plain</div></div>
+    <div class="stage-card"><span class="stage-number">96</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img096.jpg"><div class="stage-info">Duck Hunt</div></div>
+    <div class="stage-card"><span class="stage-number">97</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img097.jpg"><div class="stage-info">Wrecking Crew</div></div>
+    <div class="stage-card"><span class="stage-number">98</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img098.jpg"><div class="stage-info">Pilotwings</div></div>
+    <div class="stage-card"><span class="stage-number">99</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img099.jpg"><div class="stage-info">Wuhu Island</div></div>
+    <div class="stage-card"><span class="stage-number">100</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img100.jpg"><div class="stage-info">Mario Circuit</div></div>
+    <div class="stage-card"><span class="stage-number">101</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img101.jpg"><div class="stage-info">Pac-Land</div></div>
+    <div class="stage-card"><span class="stage-number">102</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img102.jpg"><div class="stage-info">Suzaku Castle</div></div>
+    <div class="stage-card"><span class="stage-number">103</span><img src="https://www.smashbros.com/assets_v2/img/stage/stage_img103.jpg">
