@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="js/auth.js"></script>
+  <script src="auth.js"></script>
   <script>verificarAcceso();</script>
 
   <meta charset="UTF-8">
@@ -192,7 +192,8 @@
 
   <section class="search-container">
     <h1 class="search-title">Luchadores</h1>
-    <input type="text" id="fighterSearch" placeholder="Buscar por nombre o número...">
+    <input type="text" id="fighterSearch" data-fighter-search placeholder="Buscar por nombre o número...">
+    <p data-fighter-count style="margin-top: 16px; color: #d0d0d0; font-size: 14px;">0 luchadores visibles</p>
   </section>
 
   <main class="fighters-grid" id="fightersGrid">
@@ -200,7 +201,7 @@
     <a href="fighter-detail.html?id=donkey_kong" class="fighter-card-link"><div class="fighter-card" data-name="Donkey Kong" data-number="02"><img src="https://www.smashbros.com/assets_v2/img/fighter/donkey_kong/main.png" alt="Donkey Kong"><div class="fighter-name">Donkey Kong</div></div></a>
     <a href="fighter-detail.html?id=link" class="fighter-card-link"><div class="fighter-card" data-name="Link" data-number="03"><img src="https://www.smashbros.com/assets_v2/img/fighter/link/main.png" alt="Link"><div class="fighter-name">Link</div></div></a>
     <a href="fighter-detail.html?id=samus" class="fighter-card-link"><div class="fighter-card" data-name="Samus" data-number="04"><img src="https://www.smashbros.com/assets_v2/img/fighter/samus/main.png" alt="Samus"><div class="fighter-name">Samus</div></div></a>
-    <a href="fighter-detail.html?id=dark_samus" class="fighter-card-link"><div class="fighter-card" data-name="Samus Oscura" data-number="04e"><img src="https://www.smashbros.com/assets_v2/img/fighter/samus_dark/main.png" alt="Samus Oscura"><div class="fighter-name">Samus Oscura</div></div></a>
+    <a href="fighter-detail.html?id=dark_samus" class="fighter-card-link"><div class="fighter-card" data-name="Samus Oscura" data-number="04e"><img src="https://www.smashbros.com/assets_v2/img/fighter/dark_samus/main.png" alt="Samus Oscura"><div class="fighter-name">Samus Oscura</div></div></a>
     <a href="fighter-detail.html?id=yoshi" class="fighter-card-link"><div class="fighter-card" data-name="Yoshi" data-number="05"><img src="https://www.smashbros.com/assets_v2/img/fighter/yoshi/main.png" alt="Yoshi"><div class="fighter-name">Yoshi</div></div></a>
     <a href="fighter-detail.html?id=kirby" class="fighter-card-link"><div class="fighter-card" data-name="Kirby" data-number="06"><img src="https://www.smashbros.com/assets_v2/img/fighter/kirby/main.png" alt="Kirby"><div class="fighter-name">Kirby</div></div></a>
     <a href="fighter-detail.html?id=fox" class="fighter-card-link"><div class="fighter-card" data-name="Fox" data-number="07"><img src="https://www.smashbros.com/assets_v2/img/fighter/fox/main.png" alt="Fox"><div class="fighter-name">Fox</div></div></a>
@@ -228,12 +229,12 @@
     <a href="fighter-detail.html?id=mr_game_and_watch" class="fighter-card-link"><div class="fighter-card" data-name="Mr. Game & Watch" data-number="26"><img src="https://www.smashbros.com/assets_v2/img/fighter/mr_game_and_watch/main.png" alt="Mr. Game & Watch"><div class="fighter-name">Mr. Game & Watch</div></div></a>
     <a href="fighter-detail.html?id=meta_knight" class="fighter-card-link"><div class="fighter-card" data-name="Meta Knight" data-number="27"><img src="https://www.smashbros.com/assets_v2/img/fighter/meta_knight/main.png" alt="Meta Knight"><div class="fighter-name">Meta Knight</div></div></a>
     <a href="fighter-detail.html?id=pit" class="fighter-card-link"><div class="fighter-card" data-name="Pit" data-number="28"><img src="https://www.smashbros.com/assets_v2/img/fighter/pit/main.png" alt="Pit"><div class="fighter-name">Pit</div></div></a>
-    <a href="fighter-detail.html?id=dark_pit" class="fighter-card-link"><div class="fighter-card" data-name="Pit Sombrío" data-number="28e"><img src="https://www.smashbros.com/assets_v2/img/fighter/pit_dark/main.png" alt="Pit Sombrío"><div class="fighter-name">Pit Sombrío</div></div></a>
+    <a href="fighter-detail.html?id=dark_pit" class="fighter-card-link"><div class="fighter-card" data-name="Pit Sombrío" data-number="28e"><img src="https://www.smashbros.com/assets_v2/img/fighter/dark_pit/main.png" alt="Pit Sombrío"><div class="fighter-name">Pit Sombrío</div></div></a>
     <a href="fighter-detail.html?id=zero_suit_samus" class="fighter-card-link"><div class="fighter-card" data-name="Samus Zero" data-number="29"><img src="https://www.smashbros.com/assets_v2/img/fighter/zero_suit_samus/main.png" alt="Samus Zero"><div class="fighter-name">Samus Zero</div></div></a>
     <a href="fighter-detail.html?id=wario" class="fighter-card-link"><div class="fighter-card" data-name="Wario" data-number="30"><img src="https://www.smashbros.com/assets_v2/img/fighter/wario/main.png" alt="Wario"><div class="fighter-name">Wario</div></div></a>
     <a href="fighter-detail.html?id=snake" class="fighter-card-link"><div class="fighter-card" data-name="Snake" data-number="31"><img src="https://www.smashbros.com/assets_v2/img/fighter/snake/main.png" alt="Snake"><div class="fighter-name">Snake</div></div></a>
     <a href="fighter-detail.html?id=ike" class="fighter-card-link"><div class="fighter-card" data-name="Ike" data-number="32"><img src="https://www.smashbros.com/assets_v2/img/fighter/ike/main.png" alt="Ike"><div class="fighter-name">Ike</div></div></a>
-    <a href="fighter-detail.html?id=pokemon_trainer" class="fighter-card-link"><div class="fighter-card" data-name="Entrenador Pokémon" data-number="33-35"><img src="https://www.smashbros.com/assets_v2/img/fighter/ptrainer/main.png" alt="Entrenador Pokémon"><div class="fighter-name">Entrenador Pokémon</div></div></a>
+    <a href="fighter-detail.html?id=pokemon_trainer" class="fighter-card-link"><div class="fighter-card" data-name="Entrenador Pokémon" data-number="33-35"><img src="https://www.smashbros.com/assets_v2/img/fighter/pokemon_trainer/main.png" alt="Entrenador Pokémon"><div class="fighter-name">Entrenador Pokémon</div></div></a>
     <a href="fighter-detail.html?id=diddy_kong" class="fighter-card-link"><div class="fighter-card" data-name="Diddy Kong" data-number="36"><img src="https://www.smashbros.com/assets_v2/img/fighter/diddy_kong/main.png" alt="Diddy Kong"><div class="fighter-name">Diddy Kong</div></div></a>
     <a href="fighter-detail.html?id=lucas" class="fighter-card-link"><div class="fighter-card" data-name="Lucas" data-number="37"><img src="https://www.smashbros.com/assets_v2/img/fighter/lucas/main.png" alt="Lucas"><div class="fighter-name">Lucas</div></div></a>
     <a href="fighter-detail.html?id=sonic" class="fighter-card-link"><div class="fighter-card" data-name="Sonic" data-number="38"><img src="https://www.smashbros.com/assets_v2/img/fighter/sonic/main.png" alt="Sonic"><div class="fighter-name">Sonic</div></div></a>
@@ -246,7 +247,7 @@
     <a href="fighter-detail.html?id=villager" class="fighter-card-link"><div class="fighter-card" data-name="Aldeano" data-number="45"><img src="https://www.smashbros.com/assets_v2/img/fighter/villager/main.png" alt="Aldeano"><div class="fighter-name">Aldeano</div></div></a>
     <a href="fighter-detail.html?id=mega_man" class="fighter-card-link"><div class="fighter-card" data-name="Mega Man" data-number="46"><img src="https://www.smashbros.com/assets_v2/img/fighter/mega_man/main.png" alt="Mega Man"><div class="fighter-name">Mega Man</div></div></a>
     <a href="fighter-detail.html?id=wii_fit_trainer" class="fighter-card-link"><div class="fighter-card" data-name="Entrenadora de Wii Fit" data-number="47"><img src="https://www.smashbros.com/assets_v2/img/fighter/wii_fit_trainer/main.png" alt="Entrenadora de Wii Fit"><div class="fighter-name">Entrenadora de Wii Fit</div></div></a>
-    <a href="fighter-detail.html?id=rosalina_and_luma" class="fighter-card-link"><div class="fighter-card" data-name="Estela y Destello" data-number="48"><img src="https://www.smashbros.com/assets_v2/img/fighter/rosalina/main.png" alt="Estela y Destello"><div class="fighter-name">Estela y Destello</div></div></a>
+    <a href="fighter-detail.html?id=rosalina_and_luma" class="fighter-card-link"><div class="fighter-card" data-name="Estela y Destello" data-number="48"><img src="https://www.smashbros.com/assets_v2/img/fighter/rosalina_and_luma/main.png" alt="Estela y Destello"><div class="fighter-name">Estela y Destello</div></div></a>
     <a href="fighter-detail.html?id=little_mac" class="fighter-card-link"><div class="fighter-card" data-name="Little Mac" data-number="49"><img src="https://www.smashbros.com/assets_v2/img/fighter/little_mac/main.png" alt="Little Mac"><div class="fighter-name">Little Mac</div></div></a>
     <a href="fighter-detail.html?id=greninja" class="fighter-card-link"><div class="fighter-card" data-name="Greninja" data-number="50"><img src="https://www.smashbros.com/assets_v2/img/fighter/greninja/main.png" alt="Greninja"><div class="fighter-name">Greninja</div></div></a>
     <a href="fighter-detail.html?id=mii_fighter" class="fighter-card-link"><div class="fighter-card" data-name="Luchador Mii" data-number="51-53"><img src="https://www.smashbros.com/assets_v2/img/fighter/mii_fighter/main.png" alt="Luchador Mii"><div class="fighter-name">Luchador Mii</div></div></a>
@@ -271,14 +272,14 @@
     
     <a href="fighter-detail.html?id=piranha_plant" class="fighter-card-link"><div class="fighter-card" data-name="Planta Piraña" data-number="70"><img src="https://www.smashbros.com/assets_v2/img/fighter/piranha_plant/main.png" alt="Planta Piraña"><div class="fighter-name">Planta Piraña</div></div></a>
     <a href="fighter-detail.html?id=joker" class="fighter-card-link"><div class="fighter-card" data-name="Joker" data-number="71"><img src="https://www.smashbros.com/assets_v2/img/fighter/joker/main.png" alt="Joker"><div class="fighter-name">Joker</div></div></a>
-    <a href="fighter-detail.html?id=hero" class="fighter-card-link"><div class="fighter-card" data-name="Héroe" data-number="72"><img src="https://www.smashbros.com/assets_v2/img/fighter/hero/main.png" alt="Héroe"><div class="fighter-name">Héroe</div></div></a>
+    <a href="fighter-detail.html?id=hero" class="fighter-card-link"><div class="fighter-card" data-name="Héroe" data-number="72"><img src="https://www.smashbros.com/assets_v2/img/fighter/dq_hero/main.png" alt="Héroe"><div class="fighter-name">Héroe</div></div></a>
     <a href="fighter-detail.html?id=banjo_and_kazooie" class="fighter-card-link"><div class="fighter-card" data-name="Banjo y Kazooie" data-number="73"><img src="https://www.smashbros.com/assets_v2/img/fighter/banjo_and_kazooie/main.png" alt="Banjo y Kazooie"><div class="fighter-name">Banjo y Kazooie</div></div></a>
     <a href="fighter-detail.html?id=terry" class="fighter-card-link"><div class="fighter-card" data-name="Terry" data-number="74"><img src="https://www.smashbros.com/assets_v2/img/fighter/terry/main.png" alt="Terry"><div class="fighter-name">Terry</div></div></a>
     <a href="fighter-detail.html?id=byleth" class="fighter-card-link"><div class="fighter-card" data-name="Byleth" data-number="75"><img src="https://www.smashbros.com/assets_v2/img/fighter/byleth/main.png" alt="Byleth"><div class="fighter-name">Byleth</div></div></a>
-    <a href="fighter-detail.html?id=minmin" class="fighter-card-link"><div class="fighter-card" data-name="Min Min" data-number="76"><img src="https://www.smashbros.com/assets_v2/img/fighter/minmin/main.png" alt="Min Min"><div class="fighter-name">Min Min</div></div></a>
+    <a href="fighter-detail.html?id=min_min" class="fighter-card-link"><div class="fighter-card" data-name="Min Min" data-number="76"><img src="https://www.smashbros.com/assets_v2/img/fighter/minmin/main.png" alt="Min Min"><div class="fighter-name">Min Min</div></div></a>
     <a href="fighter-detail.html?id=steve" class="fighter-card-link"><div class="fighter-card" data-name="Steve" data-number="77"><img src="https://www.smashbros.com/assets_v2/img/fighter/steve/main.png" alt="Steve"><div class="fighter-name">Steve</div></div></a>
     <a href="fighter-detail.html?id=sephiroth" class="fighter-card-link"><div class="fighter-card" data-name="Sefirot" data-number="78"><img src="https://www.smashbros.com/assets_v2/img/fighter/sephiroth/main.png" alt="Sefirot"><div class="fighter-name">Sefirot</div></div></a>
-    <a href="fighter-detail.html?id=pyra" class="fighter-card-link"><div class="fighter-card" data-name="Pyra / Mythra" data-number="79-80"><img src="https://www.smashbros.com/assets_v2/img/fighter/pyra/main.png" alt="Pyra"><div class="fighter-name">Pyra / Mythra</div></div></a>
+    <a href="fighter-detail.html?id=pyra_mythra" class="fighter-card-link"><div class="fighter-card" data-name="Pyra / Mythra" data-number="79-80"><img src="https://www.smashbros.com/assets_v2/img/fighter/pyra/main.png" alt="Pyra"><div class="fighter-name">Pyra / Mythra</div></div></a>
     <a href="fighter-detail.html?id=kazuya" class="fighter-card-link"><div class="fighter-card" data-name="Kazuya" data-number="81"><img src="https://www.smashbros.com/assets_v2/img/fighter/kazuya/main.png" alt="Kazuya"><div class="fighter-name">Kazuya</div></div></a>
     <a href="fighter-detail.html?id=sora" class="fighter-card-link"><div class="fighter-card" data-name="Sora" data-number="82"><img src="https://www.smashbros.com/assets_v2/img/fighter/sora/main.png" alt="Sora"><div class="fighter-name">Sora</div></div></a>
   </main>
